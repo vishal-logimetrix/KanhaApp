@@ -1,0 +1,143 @@
+<div class="container-fluid">
+    <form [formGroup]="createForm" (ngSubmit)="Create()">
+        <div class="row">
+            <div class="col-md-12" style=" background-color: lightblue;">
+                Rate Applicability : {{this._rate_code}}
+                <a href="javascript:void()" [routerLink]="['/milk/rate-master']"><i class="fa fa-plus"
+                        style="float: right;margin: 3px;font-size: larger;"> </i></a>
+                <a href="javascript:void()" [routerLink]="['/milk/rate-applicability/list']"><i class="fa fa-search"
+                        style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+                <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"></i>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="company_code" class="mt-2 wd-10">Select Company<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" (change)="PlantDropDown()" disabled>
+                        <!-- <option value="" selected>Select Company</option> -->
+                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                        [ngClass]="{'is-invalid' : createForm.get('company_code')?.invalid && createForm.get('company_code')?.touched}"
+                        (change)="PlantDropDown()">
+                        <option value="" selected>Select Company</option>
+                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select> -->
+                    <div class="invalid-feedback">Please select company name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="plant_code" class="mt-2 wd-10">Select Plant<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" (change)="MCCDropDown()" disabled>
+                        <!-- <option value="" selected>Select Plant</option> -->
+                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                        [ngClass]="{'is-invalid' : createForm.get('plant_code')?.invalid && createForm.get('plant_code')?.touched}"
+                        (change)="MCCDropDown()">
+                        <option value="" selected>Select Plant</option>
+                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select> -->
+                    <div class="invalid-feedback">Please select plant name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="mcc_code" class="mt-2 wd-10">Select MCC<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" formControlName="mcc_code"
+                        [ngClass]="{'is-invalid' : createForm.get('mcc_code')?.invalid && createForm.get('mcc_code')?.touched}"
+                        (change)="BMCDropDown($event)">
+                        <option value="" selected>Select MCC</option>
+                        <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select mcc name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="bmc_code" class="mt-2 wd-10">Select BMC<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" formControlName="bmc_code"
+                        [ngClass]="{'is-invalid' : createForm.get('bmc_code')?.invalid && createForm.get('bmc_code')?.touched}"
+                        (change)="RouteDropDown($event)">
+                        <option value="" selected>Select BMC</option>
+                        <option *ngFor="let text of this.bmcDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select bmc name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2col-ld-2 col-xl-2">
+                    <label for="effective_date" class="mt-2">Effective Date<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" id="effective_date"
+                        formControlName="effective_date" placeholder="DD/MM/YYYY" bsDatepicker
+                        [bsConfig]="datePickerConfig"
+                        [ngClass]="{'is-invalid' : createForm.get('effective_date')?.invalid && createForm.get('effective_date')?.touched}">
+                    <div class="invalid-feedback">Please select effective date.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="effective_shift" class="mt-2 wd-10">Effective Shift<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" formControlName="effective_shift"
+                        [ngClass]="{'is-invalid' : createForm.get('effective_shift')?.invalid && createForm.get('effective_shift')?.touched}">
+                        <option value="" selected>Select Shift</option>
+                        <option value="1">Morning</option>
+                        <option value="2">Evening</option>
+                    </select>
+                    <div class="invalid-feedback">Please select effective shift.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="rate_location" class="mt-2 required">Rate Location</label>
+                    <select class="form-dropdown mt-2" formControlName="rate_location"
+                        [ngClass]="{'is-invalid' : createForm.get('rate_location')?.invalid && createForm.get('rate_location')?.touched}">
+                        <option value="" selected>Select Rate Location</option>
+                        <option *ngFor="let text of this.deviceLocationDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please enter a rate location</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style=" background-color: lightblue; margin-top: 20px; text-align: center;">
+                Applicability For
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style=" background-color: lightblue; margin-top: 10px; text-align: center;">
+                Routes
+            </div>
+            <div class="col-md-4" style=" background-color: lightblue; margin-top: 10px; text-align: center;">
+                MPPs
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="border:1px solid black;">
+                <div *ngFor="let r of this.routeDropDown; let i=index">
+                    <input type="checkbox" class="largerCheckbox" formArrayName="route_codes" [value]="r.value"
+                        (change)="onRouteCheckboxChange($event)" />
+                    <div class="checkbox-label">{{r.text}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 " style="border:1px solid black;">
+                <div  *ngFor="let r of this.mppDropDown; let i=index">
+                    <input type="checkbox" class="largerCheckbox" formArrayName="mpp_codes" [value]="r.value"
+                        (change)="onMPPCheckboxChange($event)" />
+                    <div class="checkbox-label">{{r.text}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                <button type="submit" class="btn btn_form mt-5">Submit</button>
+                <!-- <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">Submit</button> -->
+                <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

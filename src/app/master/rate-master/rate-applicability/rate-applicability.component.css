@@ -1,0 +1,19 @@
+input.largerCheckbox {
+    width: 15px;
+    height: 20px;
+}
+
+.checkbox-label{
+    padding-top: 5px;
+    padding-left: 5px;
+    display: initial;
+    margin: 5px;
+}
+
+.fixed-content {
+    top: 0;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}

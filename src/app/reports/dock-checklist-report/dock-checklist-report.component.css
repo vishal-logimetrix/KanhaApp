@@ -1,0 +1,17 @@
+#card{
+    margin: 2%;
+    border-radius: 0%;
+}
+.table-bordered {
+    border: 1px solid #000; /* You can adjust the border style and color as needed */
+  }
+  table{
+    margin-top: 2%;
+  }
+  .tableHead{
+    height: 35px!important;
+    background-color: #003b9a;
+  }
+  .card-footer{
+    text-align: right;
+  }

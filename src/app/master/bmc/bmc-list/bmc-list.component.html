@@ -1,0 +1,259 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            BMC List
+            <a href="javascript:void()"><i class="fa fa-plus" (click)="addBMC()" style="float: right;margin: 3px;font-size: larger;"> </i></a> <!--[routerLink]="['/entity/bmc']"-->
+            <a href="javascript:void()" [routerLink]="['/entity/bmc/list']" (click)="showModal()"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;" (click)="exportDataToExcel()" title="downlod in excel"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="searchForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search BMC</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+        class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="dialog-auto-name" class="modal-title pull-left">BMC Search</h5>
+                    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true" class="visually-hidden">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="searchForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="company_code" class="mt-2 wd-10">Select Company</label>
+                                    <select class="form-dropdown mt-2" (change)="PlantDropDown()" disabled>
+                                        <!-- <option value="" selected>Select Company</option> -->
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('company_code')?.invalid && searchForm.get('company_code')?.touched}"
+                                    (change)="PlantDropDown()" >
+                                        <option value="" selected>Select Company</option>
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select company name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="plant_code" class="mt-2 wd-10">Select Plant</label>
+                                    <select class="form-dropdown mt-2" (change)="MCCDropDown()" disabled>
+                                        <!-- <option value="" selected>Select Plant</option> -->
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('plant_code')?.invalid && searchForm.get('plant_code')?.touched}"
+                                    (change)="MCCDropDown()">
+                                        <option value="" selected>Select Plant</option>
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select plant name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="mcc_code" class="mt-2 wd-10">Select MCC</label>
+                                    <select class="form-dropdown mt-2" formControlName="mcc_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}">
+                                        <option value="" selected>Select MCC</option>
+                                        <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select mcc name.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_form" (click)="SearchBMC()">Search</button>
+                        <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isAddModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Add BMC</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Create()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mcc_code" class="mt-2 wd-10 required">Select MCC</label>
+                        <select class="form-dropdown mt-2" formControlName="mcc_code"
+                        [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}"
+                        (change)="PlantDropDown()" >
+                            <option value="" selected>Select MCC</option>
+                            <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select mcc name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_code" class="mt-2 required">BMC Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="bmc_code" id="bmc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_code')?.errors && searchForm.get('bmc_code')?.touched}"
+                            placeholder="BMC Code">
+                        <div class="invalid-feedback">Please enter a bmc code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">BMC Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="bmc_name" id="bmc_name"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_name')?.errors && searchForm.get('bmc_name')?.touched}"
+                            placeholder="BMC Name">
+                        <div class="invalid-feedback">Please enter a bmc name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Address</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="address" id="address"
+                            placeholder="Address">
+                      </div>
+                      </div>
+                      <div class="form-check pl-3 mt-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                          <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                          <label class="form-check-label" for="is_active">
+                            Is Active
+                          </label>
+                      </div>
+                    </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " >Add</button> <!--[disabled]="!searchForm.valid"-->
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Update BMC</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mcc_code" class="mt-2 wd-10 required">Select MCC</label>
+                        <select class="form-dropdown mt-2" formControlName="mcc_code"
+                        [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}"
+                        (change)="PlantDropDown()" >
+                            <option value="" selected>Select MCC</option>
+                            <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select mcc name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_code" class="mt-2 required">BMC Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="bmc_code" id="bmc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_code')?.errors && searchForm.get('bmc_code')?.touched}"
+                            placeholder="BMC Code">
+                        <div class="invalid-feedback">Please enter a bmc code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">BMC Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="bmc_name" id="bmc_name"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_name')?.errors && searchForm.get('bmc_name')?.touched}"
+                            placeholder="BMC Name">
+                        <div class="invalid-feedback">Please enter a bmc name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Address</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="address" id="address"
+                            placeholder="Address">
+                      </div>
+                      </div>
+                      <div class="form-check pl-3 mt-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                          <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                          <label class="form-check-label" for="is_active">
+                            Is Active
+                          </label>
+                      </div>
+                    </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form ">Update</button> <!--[disabled]="!searchForm.valid"-->
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+</div>

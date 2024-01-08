@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Rate Master
+            <a href="javascript:void()" [routerLink]="['/milk/rate-master']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/milk/rate-master/list']"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"></i>
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="rate_name" class="mt-2">Rate Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="rate_name"
+                        id="rate_name"
+                        [ngClass]="{'is-invalid' : createForm.get('rate_name')?.errors && createForm.get('rate_name')?.touched}"
+                        placeholder="Rate Name">
+                    <div class="invalid-feedback">Please enter a rate name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2col-ld-2 col-xl-2">
+                    <label for="rate_chart_file" class="mt-2">Rate Uploading Date<span
+                            class="text-danger">*</span></label>
+                    <input type="file" class="form-control form-control-sm mt-2" id="rate_chart_file"
+                        formControlName="rate_chart_file" name="rate_chart_file" (change)="onFileChange($event)"
+                        #fileInput>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                    <label for="remark" class="mt-2">Rate Remarks<span class="text-danger">*</span></label>
+                    <textarea type="text" class="form-control form-control-sm mt-2" formControlName="remark" id="remark"
+                        [ngClass]="{'is-invalid' : createForm.get('remark')?.errors && createForm.get('remark')?.touched}"
+                        placeholder="Enter rate basic detials e.g 60/40 rate etc." rows="5"></textarea>
+                    <div class="invalid-feedback">Please enter a rate remark.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5"
+                        [disabled]="!createForm.valid || buttonDisabled">Submit</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="login-box">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="logo">
+                <img src="assets/img/vaikom_logo.png" alt="logo">
+            </div>
+            <div class="bg_img">
+                <img class="main_img" src="assets/img/SMPS.png" alt="login_page_bgImage">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-box">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="heading">
+                        <span>LOGIN TO YOUR ACCOUNT</span>
+                        <br><br><br>
+                    </div>
+                    <div class="user_name">
+                        <input class="form-control" formControlName="user_name" name="user_name" id="txt_username" placeholder="Username">
+                        <div *ngIf="loginForm.get('user_name')?.hasError('required') && loginForm.get('user_name')?.touched"
+                            class="text-danger error-msg">
+                            UserName is required.
+                        </div>
+                    </div>
+                    <br>
+                    <div class="pass">
+                        <input class="form-control" type="password" formControlName="password" name="password" id="txt_password" placeholder="Password">
+                        <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+                            class="text-danger error-msg">
+                            password is required.
+                        </div>
+                    </div>
+                    <br>
+                    <button type="button" class="btn" id="login_btn" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+                </form>
+                <a href="javascript: void(0)" [routerLink]="['/forgot/password']">Forgot Password</a>
+                <br><br>
+                <a href="javascript: void(0)" (click)="showRegisterModal()">Register</a>
+                <br><br><br>
+                <div class="footer">
+                    <span>All Rights Reserved</span>
+                    <br>
+                    <a href="javascript:void(0)">© 2023 Vaikom TechSolution.</a>
+                    <br>
+                    <br>
+                    <p>follow us on
+                        <span>
+                            <a href="javascript:void(0)"> <i class="bi bi-facebook"></i> </a> &nbsp;
+                            <a href="javascript:void(0)"> <i class="bi bi-linkedin" style="color: rgb(82, 133, 227);"></i> </a> &nbsp;
+                            <a href="javascript:void(0)"> <i class="bi bi-instagram" style="color: red;"></i> </a>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            State List
+            <i (click)="exportDataToExcel()" class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"
+                title="download excel sheet"></i>
+        </div>
+    </div>
+    <div class="search">
+        <form [formGroup]="searchForm">
+            <mat-form-field appearance="fill">
+                <mat-label>Search state</mat-label>
+                <input class="searchBox" type="text" matInput formControlName="search" (input)="onSearchInput($event)">
+                <mat-icon matSuffix class="fa fa-search"></mat-icon>
+            </mat-form-field>
+        </form>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 200px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div> -->
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+        class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="dialog-auto-name" class="modal-title pull-left required">Update state</h5>
+                    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true" class="visually-hidden">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                                <label for="bmc_name" class="mt-2 required">state Code</label>
+                                <input type="text" class="form-control form-control-sm mt-2" id="state_code"
+                                    formControlName="state_code" placeholder="State code">
+                                <div class="invalid-feedback">Please enter a state Code.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                                <label for="bmc_name" class="mt-2 required">state Name</label>
+                                <input type="text" class="form-control form-control-sm mt-2" id="state_name"
+                                    formControlName="state_name" placeholder="state Name">
+                                <div class="invalid-feedback">Please enter a state name.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div>
+                                <button type="submit" class="btn btn_form ">Update</button>
+                                <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="newTable mt-1">
+    <table mat-table [dataSource]="rowData" class="table table-bordered">
+      <ng-container matColumnDef="someColumnName">
+        <th mat-header-cell *matHeaderCellDef> State Code </th>
+        <td mat-cell *matCellDef="let row">{{ rowData[0].state_code }}</td>
+      </ng-container>
+      <ng-container matColumnDef="countryName">
+        <th mat-header-cell *matHeaderCellDef> State Name </th>
+        <td mat-cell *matCellDef="let row">{{ rowData[0].state_name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let row">
+            <i class="fa fa-pencil ml-2" style="cursor: pointer;" title="Edit" (click)="addModel(row)"></i> 
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['someColumnName', 'countryName', 'action']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['someColumnName', 'countryName', 'action']"></tr>
+    </table>
+  </div>
+  
+
+  
+  

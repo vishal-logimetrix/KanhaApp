@@ -1,0 +1,212 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            MCC List
+            <a href="javascript:void()" (click)="exportDataToExcel()" title="Download in Excel"><i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" ><i class="fa fa-plus" (click)="addMCC()" style="float: right;margin: 3px;font-size: larger;" title="Add MCC"> </i></a>  <!--[routerLink]="['/entity/mcc']"-->
+            <a href="javascript:void()" [routerLink]="['/entity/mcc/list']" (click)="showModal()"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;" title="Search MCC"> </i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="searchForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search MCC</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+        class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="dialog-auto-name" class="modal-title pull-left">MCC Search</h5>
+                    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true" class="visually-hidden">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="searchForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                                    <select class="form-dropdown mt-2"
+                                    (change)="PlantDropDown()" disabled>
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('company_code')?.invalid && searchForm.get('company_code')?.touched}"
+                                    (change)="PlantDropDown($event)" >
+                                        <option value="" selected>Select Company</option>
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select company name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                                    <select class="form-dropdown mt-2" disabled>
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('plant_code')?.invalid && searchForm.get('plant_code')?.touched}">
+                                        <option value="" selected>Select Plant</option>
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select plant name.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_form" (click)="SearchMCC()">Search</button>
+                        <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isAddModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Add MCC</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Create()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">MCC Code</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="plant_code" placeholder="MCC code"  formControlName="mcc_code" [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.errors && searchForm.get('mcc_code')?.touched}">
+                          <div class="invalid-feedback">MCC Code is required.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">MCC Name</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="plant_name" placeholder="MCC name" formControlName="mcc_name" [ngClass]="{'is-invalid' : searchForm.get('mcc_name')?.errors && searchForm.get('mcc_name')?.touched}">
+                          <div class="invalid-feedback">MCC Name is required.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">Address</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="address" placeholder="Address" formControlName="address">
+                      </div>
+                      <div class="form-check pl-3 mt-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                          <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                          <label class="form-check-label" for="is_active">
+                            Is Active
+                          </label>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " [disabled]="!searchForm.valid">Add</button> 
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Update MCC</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                        <select class="form-dropdown mt-2" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">MCC Code</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="plant_code" placeholder="MCC code"  formControlName="mcc_code" [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.errors && searchForm.get('mcc_code')?.touched}">
+                          <div class="invalid-feedback">MCC Code is required.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">MCC Name</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="plant_name" placeholder="MCC name" formControlName="mcc_name" [ngClass]="{'is-invalid' : searchForm.get('mcc_name')?.errors && searchForm.get('mcc_name')?.touched}">
+                          <div class="invalid-feedback">MCC Name is required.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                          <label for="from_date" class="mt-2">Address</label>
+                          <input type="text" class="form-control form-control-sm mt-2" id="address" placeholder="Address" formControlName="address">
+                      </div>
+                      <div class="form-check pl-3 mt-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                          <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                          <label class="form-check-label" for="is_active">
+                            Is Active
+                          </label>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " [disabled]="!searchForm.valid">Update</button> 
+                          <!-- <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button> -->
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>

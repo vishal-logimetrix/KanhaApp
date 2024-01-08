@@ -1,0 +1,277 @@
+<div class="row">
+    <div class="col-md-2 ">
+    <div class="row flex-nowrap">
+      <div>
+      <!-- <div class="col-md-6"> -->
+        <nav [ngClass]="{'col-md-2': !isSidebarCollapsed, 'col-md-0': isSidebarCollapsed}" class="sidebar">
+          <!-- <nav class="sidebar"> -->
+          <div class="text">
+            <img src="assets/img/vaikom_logo.png" alt="">
+          </div>
+          <ul id="ul">
+            <li><a [routerLink]="['/home/dashboard']" routerLinkActive="selected">Dashboard</a></li>
+            <li>
+              <a href="javascript:void(0)" (click)="toggleMaster()" [class.rotate]="showMaster">
+                Master
+                <span class="fa fa-caret-down first"></span>
+              </a>
+              <ul *ngIf="showMaster" class="feat-show">
+                <li>
+                  <a href="javascript:void(0)" (click)="toggleGeo()" [class.rotate]="showState" style="color:  #FFD700;">
+                    GEO
+                    <span class="fa fa-caret-down first" ></span>
+                  </a>
+                  <ul *ngIf="showState" class="serv-show">
+                    <li><a [routerLink]="['/geo/state']" routerLinkActive="selected" style="color:#FFC0CB">State</a></li>
+                    <li><a [routerLink]="['/geo/district']" routerLinkActive="selected" style="color:#FFC0CB">District</a></li>
+                    <li><a [routerLink]="['/geo/tehsil']" routerLinkActive="selected" style="color:#FFC0CB">Tehsil</a></li>
+                    <li><a [routerLink]="['/geo/village']" routerLinkActive="selected" style="color:#FFC0CB">Village</a></li>
+                  </ul>
+                </li>
+                <li><a href="javascript:void(0)" (click)="toggleCompany()" [class.rotate]="showCompany" style="color:  #FFD700;">
+                  Entity
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showCompany" class="serv-show">
+                  <li><a [routerLink]="['/entity/company']" routerLinkActive="selected" style="color:#FFC0CB">Company</a></li>
+                  <li><a [routerLink]="['/entity/plant']" routerLinkActive="selected"  style="color:#FFC0CB">Plant</a></li>
+                  <li><a [routerLink]="['/entity/mcc/list']" routerLinkActive="selected"  style="color:#FFC0CB">MCC</a></li>
+                  <li><a [routerLink]="['/entity/bmc/list']" routerLinkActive="selected"  style="color:#FFC0CB">BMC</a></li>
+                  <li><a [routerLink]="['//entity/route/route-list']" routerLinkActive="selected"  style="color:#FFC0CB">Route</a></li>
+                  <li><a [routerLink]="['/entity/mpp/mpp-list']" routerLinkActive="selected" style="color:#FFC0CB">MPP</a></li>
+                  <li><a [routerLink]="['/entity/sahayak/sahayak-list']" routerLinkActive="selected"  style="color:#FFC0CB">VSP</a></li>
+                  <li><a [routerLink]="['/entity/farmer/farmer-list']" routerLinkActive="selected"  style="color:#FFC0CB">Farmer</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)=" toggleMilkRate()" [class.rotate]="showMilkRate" style="color:  #FFD700;">
+                  Milk Rate
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showMilkRate" class="serv-show">
+                  <li><a [routerLink]="['/milk/rate-master']" routerLinkActive="selected" style="color:#FFC0CB">Rate Master</a></li>
+                  <li><a [routerLink]="['/milk/rate-applicability']" title="Rate Applicability" routerLinkActive="selected" style="color:#FFC0CB">Rate Applicability</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" (click)="toggleTransaction()" [class.rotate]="showTransaction">
+                Transaction
+                <span class="fa fa-caret-down first"></span>
+              </a>
+              <ul *ngIf="showTransaction" class="feat-show">
+                <li>
+                  <a href="javascript:void(0)" (click)="toggleManual()" [class.rotate]="showManual" style="color:  #FFD700;">
+                    Manual Entry
+                    <span class="fa fa-caret-down first"></span>
+                  </a>
+                  <ul *ngIf="showManual" class="serv-show">
+                    <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Member Collection Data</a></li>
+                    <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Dispatch Data</a></li>
+                  </ul>
+                </li>
+                <li><a href="javascript:void(0)" (click)="toggleAutoCollection()" [class.rotate]="showAutoCollection" style="color:  #FFD700;">
+                  Auto Collection
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showAutoCollection" class="serv-show">
+                  <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Truck Arrival</a></li>
+                  <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Dock Collection</a></li>
+                  <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Lab Collection</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleModification()" [class.rotate]="showModification" style="color:  #FFD700;">
+                  Modification
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showModification" class="serv-show">
+                  <li><a href="javascript:void(0)" style="color:#FFC0CB">Dock Modification</a></li>
+                  <li><a href="javascript:void(0)" title="Lab Modification" routerLinkActive="selected" style="color:#FFC0CB">Lab Modification</a></li>
+                  <li><a href="javascript:void(0)" title="Approval Mechanism" routerLinkActive="selected" style="color:#FFC0CB">Approval Mechanism</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleImport()" [class.rotate]="showImport" style="color:  #FFD700;">
+                  Import
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showImport" class="serv-show">
+                  <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Member Collection Emport</a></li>
+                  <li><a href="javascript:void(0)" title="Dispatch Import" routerLinkActive="selected" style="color:#FFC0CB">Dispatch Import</a></li>
+                  <li><a href="javascript:void(0)" title="Manual BMC Collection" routerLinkActive="selected" style="color:#FFC0CB">Manual BMC Collection</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)=" toggleExport()" [class.rotate]="showExport" style="color:  #FFD700;">
+                  Export
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showExport" class="serv-show">
+                  <li><a href="javascript:void(0)" routerLinkActive="selected" style="color:#FFC0CB">Member Collection Export</a></li>
+                  <li><a href="javascript:void(0)" title="Dispatch Export" routerLinkActive="selected" style="color:#FFC0CB">Dispatch Export</a></li>
+                  <li><a href="javascript:void(0)" title="Approval Mechanism" routerLinkActive="selected" routerLinkActive="selected" style="color:#FFC0CB">Approval Mechanism</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" (click)="toggleMilkCollection()" [class.rotate]="showMilkCollection">
+                Milk Collection
+                <span class="fa fa-caret-down second"></span>
+              </a>
+              <ul *ngIf="showMilkCollection" class="serv-show">
+                <li><a href="javascript:void(0)" (click)="toggleCollection()" [class.rotate]="showCollection" style="color:  #FFD700;">
+                  Collecton
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showCollection" class="serv-show">
+                  <li><a [routerLink]="['/farmer/collection']" title="Farmer Collection" routerLinkActive="selected" style="color:#FFC0CB">Farmer Collection</a></li>
+                  <li><a [routerLink]="['/bmc/collection']" title="BMC collection" routerLinkActive="selected" style="color:#FFC0CB">BMC Collection</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleDispatch()" [class.rotate]="showDispatch" style="color:#FFD700;">
+                  Dispatch
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showDispatch" class="serv-show">
+                  <li><a [routerLink]="['/Mpp/Dispatch/collection']" title="Farmer Collection" title="MPP Dispatch" routerLinkActive="selected" style="color:#FFC0CB">MPP Dispatch</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleBillRate()" [class.rotate]="showBillRate">
+                    Configuration
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showBillRate" class="serv-show">
+                    <li><a [routerLink]="['/milk/type']" routerLinkActive="selected" style="color:#FFC0CB">Milk Type</a></li>
+                    <li><a [routerLink]="['/milk/quality/type']" routerLinkActive="selected" style="color:#FFC0CB">Milk Quality Type</a></li>
+                    <li><a [routerLink]="['/common/master']" routerLinkActive="selected" style="color:#FFC0CB">Common Master</a></li>
+                    <li><a [routerLink]="['/device/master']" routerLinkActive="selected" style="color:#FFC0CB">Device Master</a></li>
+                  </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleReport()" [class.rotate]="showReports">
+                    Inventory
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showReports" class="serv-show">
+                    <li><a [routerLink]="['/product/master']" routerLinkActive="selected" style="color:#FFC0CB">Product Master</a></li>
+                    <li><a [routerLink]="['/product/sale']" routerLinkActive="selected" style="color:#FFC0CB">Product Sale</a></li>
+                  </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleUtility()" [class.rotate]="showUtility">
+                    Import Utility
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showUtility" class="serv-show">
+                    <li><a [routerLink]="['/import/utility']" routerLinkActive="selected" style="color:#FFC0CB">Master Utility</a></li>
+                  </ul>
+            </li>
+            <li><a href="javascript:void(0)" (click)="toggleSettings()" [class.rotate]="showSettings" >
+                Report
+                <span class="fa fa-caret-down second"></span>
+            </a>
+            <ul *ngIf="showSettings" class="serv-show">
+                <li><a href="javascript:void(0)" (click)="toggleCDA()" [class.rotate]="showDPUReport" title="Milk Collection Tracking" style="color:#FFD700;">
+                  Milk Collection Track
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showDPUReport" class="serv-show">
+                  <li><a [routerLink]="['/CDA/report']" title="CDA Report" routerLinkActive="selected" style="color:#FFC0CB">CDA Report</a></li>
+                  <li><a [routerLink]="['/actual-compose/report']" title="Actual Difference composete Report" routerLinkActive="selected" style="color:#FFC0CB">Actual Difference compose</a></li>
+                  <li><a [routerLink]="['/collection-receipt/report']" title="collection vs Receipt Difference Report" routerLinkActive="selected" style="color:#FFC0CB">collection vs Receipt</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleMemberCollection()" [class.rotate]="showMemberCollection" title="Member Collection Report" style="color:#FFD700;">
+                  Member collection
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showMemberCollection" class="serv-show">
+                  <li><a [routerLink]="['/signature/report']" title="Signature Report" routerLinkActive="selected" style="color:#FFC0CB">Signature Report</a></li>
+                  <li><a [routerLink]="['/member-auto-manual-collection/report']" title="Farmer Summary report" title="Member Auto/Manual collection report" routerLinkActive="selected" style="color:#FFC0CB">Member Auto/manual..</a></li>
+                  <li><a [routerLink]="['/MPP-ledger/report']" title="MPP Ledger Report" routerLinkActive="selected" style="color:#FFC0CB">Mpp Ledger Report</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleBMC()" [class.rotate]="showBMC" title="Member Collection Report" style="color:#FFD700;">
+                  BMC Report
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showBMC" class="serv-show">
+                  <li><a [routerLink]="['/collection-summary/report']" title="Collection Summary Report" routerLinkActive="selected" style="color:#FFC0CB">Collection Summary</a></li>
+                  <li><a [routerLink]="['/dock-checklist/report']" title="Dock CheckList report" title="Dock Checklist" routerLinkActive="selected" style="color:#FFC0CB">Dock Checklist</a></li>
+                  <li><a [routerLink]="['/lab-checklist/report']" title="Lab Checklist Report" routerLinkActive="selected" style="color:#FFC0CB">Lab Checklist</a></li>
+                  <li><a [routerLink]="['/sample-wise-checklist/report']" title="Sample wise data checklist Report" routerLinkActive="selected" style="color:#FFC0CB">Sample wise Data</a></li>
+                  <li><a [routerLink]="['/zeroLr-checklist/report']" title="Zero FAT/SNF checklist Report" routerLinkActive="selected" style="color:#FFC0CB">Zero FAT/SNF checklist</a></li>
+                  <li><a [routerLink]="['/daily-milk-summmary/report']" title="Daily Milk Summary Report" routerLinkActive="selected" style="color:#FFC0CB">Daily Milk Summary</a></li>
+                  <li><a [routerLink]="['/sample-wise-rateList/report']" title="Sample Wise Rate checklist Report" routerLinkActive="selected" style="color:#FFC0CB">Sample wise Rate</a></li>
+                  <li><a [routerLink]="['/canMis/report']" title="Can MIS" routerLinkActive="selected" style="color:#FFC0CB">Can MIS</a></li>
+                  <li><a [routerLink]="['/collection-ledger/report']" title="CollectionLedger Report" routerLinkActive="selected" style="color:#FFC0CB">Collection Ledger</a></li>
+                </ul>
+              </li>
+                <!-- <li><a href="javascript:void(0)" (click)="toggleRouteWise()" [class.rotate]="showRouteWise" title="Route Wise Collection Report">
+                  Route Wise Collection
+                  <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showRouteWise" class="serv-show">
+                  <li><a [routerLink]="['/CDA/report']" title="Route Wise Summary Report" routerLinkActive="selected">Route Wise Summary</a></li>
+                  <li><a href="javascript:void(0)" title="Dock CheckList report" title="Trucksheet Report" routerLinkActive="selected">TruckSheet</a></li>
+                  <li><a href="javascript:void(0)" title="Route Time MIS Report" routerLinkActive="selected">Route Time MIS</a></li>
+                  <li><a href="javascript:void(0)" title="Late Route Report" routerLinkActive="selected">Late Route</a></li>
+                  <li><a href="javascript:void(0)" title="Route Ledger Report" routerLinkActive="selected">Route Ledger</a></li>
+                </ul>
+              </li> -->
+                <li><a href="javascript:void(0)" (click)="toggleFarmer()" [class.rotate]="showFarmerCollection" title="Farmer Collection" style="color:#FFD700;">
+                  Farmer Collection
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showFarmerCollection" class="serv-show">
+                  <li><a [routerLink]="['/farmer-shift/report']" title="Farmer Shift Report" routerLinkActive="selected" style="color:#FFC0CB">Farmer Shift Report</a></li>
+                  <li><a [routerLink]="['/farmer-summary/report']" title="Farmer Summary report" routerLinkActive="selected" style="color:#FFC0CB">Farmer Summary Report</a></li>
+                  <li><a [routerLink]="['/farmer-passbook/report']" title="Farmer Passbook report" routerLinkActive="selected" style="color:#FFC0CB">Farmer Passbook Report</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleHistory()" [class.rotate]="showHistoryReport" title="Farmer Collection" style="color:#FFD700;">
+                  History Report
+                  <span class="fa fa-caret-down second" ></span>
+                </a>
+                <ul *ngIf="showHistoryReport" class="serv-show">
+                  <li><a [routerLink]="['/farmer-history/report']" title="Farmer History Report" routerLinkActive="selected" style="color:#FFC0CB">Farmer History Report</a></li>
+                  <li><a [routerLink]="['/dispatch-history/report']" title="Dispatch History Report" routerLinkActive="selected" style="color:#FFC0CB">Dispatch History Report</a></li>
+                  <li><a [routerLink]="['/transfer-history/report']" title="Transfer History Report" routerLinkActive="selected" style="color:#FFC0CB">Transfer History Report</a></li>
+                  <li><a [routerLink]="['/dock-history/report']" title="Dock History Report" routerLinkActive="selected" style="color:#FFC0CB">Dock History Report</a></li>
+                  <li><a [routerLink]="['/lab-history/report']" title="Lab History Report" routerLinkActive="selected" style="color:#FFC0CB">Lab History Report</a></li>
+                </ul>
+              </li>
+              <li><a [routerLink]="['/dpu-status-history/report']" title="Master Data Report" routerLinkActive="selected" style="color:#FFC0CB">DPU Status Report</a></li>
+              <li><a [routerLink]="['/farmer-master/report']" title="Master Data Report" routerLinkActive="selected" style="color:#FFC0CB">Master Data</a></li>
+              <li><a [routerLink]="['/mpp-dispatch-summary/report']" routerLinkActive="selected" style="color:#FFC0CB">MPP dispatch</a></li>
+              </ul>
+        </li>
+            <li><a href="javascript:void(0)" (click)="toggleUser()" [class.rotate]="showUser" >
+                User Managment
+                <span class="fa fa-caret-down second"></span>
+            </a>
+            <ul *ngIf="showUser" class="serv-show">
+                <li><a [routerLink]="['/user']" routerLinkActive="selected" style="color:#FFC0CB">User Master</a></li>
+                <li><a [routerLink]="['/change/password']" routerLinkActive="selected" style="color:#FFC0CB">Change Password</a></li>
+              </ul>
+        </li>
+            <li><a (click)="logout()" style="color: white; cursor: pointer;">LogOut</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    </div>
+    <div [ngClass]="{'col-md-10': !isSidebarCollapsed, 'col-md-12': isSidebarCollapsed}" class="content">
+      <!-- <div class="col-md-10 content"> -->
+    <!-- <div [ngClass]="{'col-md-10': !isSidebarCollapsed, 'col-md-12': isSidebarCollapsed}" class="content"> -->
+        <header class="header">
+          <button class="btn" type="button" data-bs-theme="dark" (click)="toggleSidebar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <span class="company_name">Vaikom TechSolution Pvt Ltd</span>
+        </header>
+        <router-outlet></router-outlet>
+    </div>
+</div>

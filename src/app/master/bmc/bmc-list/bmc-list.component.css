@@ -1,0 +1,20 @@
+.search{
+    margin: 10px 0px -18px 10px;
+    /* background: #e6f1f8; */
+
+  }
+  mat-form-field{
+    /* border-top: none;
+    border-left: none;
+    border-right: none;
+    background: inherit; */
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 1.125;
+    font-family: Poppins,sans-serif;
+    letter-spacing: normal;
+
+  }

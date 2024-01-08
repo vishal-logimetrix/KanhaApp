@@ -1,0 +1,13 @@
+/* Target the pagination background */
+.pagination.custom-pagination {
+    background-color: transparent; /* Set the background color to transparent */
+  }
+  .card{
+    margin-top: 5%;
+  }
+  .search{
+    margin: 10px 0px -18px 10px;
+    background: #e6f1f8;
+    /* background-color: inherit !important;
+    background: transparent !important; */
+  }

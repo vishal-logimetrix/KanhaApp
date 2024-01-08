@@ -1,0 +1,9 @@
+/* Define custom styles for the modal */
+.custom-modal {
+    width: 90%; /* Adjust the width to your preference */
+    top: 10%; /* Adjust the vertical position to your preference */
+    /* left: 5%; Adjust the horizontal position to your preference */
+    transform: none; /* Reset any transformation to center the modal properly */
+  }
+  
+  

@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            User List
+            <a href="javascript:void()" [routerLink]="['/user']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/user/list']" (click)="showModal()"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;" (click)="exportDataToExcel()" title="Download list in Excel"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine" [rowData]="rowData"
+                [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30" [headerHeight]="30">
+            </ag-grid-angular> -->
+            <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine" [rowData]="rowData"
+                [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30" [headerHeight]="30"
+                [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+        class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="dialog-auto-name" class="modal-title pull-left">User Search</h5>
+                    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true" class="visually-hidden">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="userSearchForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                                <label for="user_name">User Name</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="user_name" id="userNAme"
+                                    placeholder="User Name">
+                            </div>
+                            <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                                <label for="mobile_no">Mobile No</label>
+                                <input type="text" class="form-control form-control-sm" formControlName="mobile_no" id="mobile_no"
+                                    placeholder="Mobile No.">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_form" [disabled]="!userSearchForm.valid"
+                            (click)="searchUser()">Search</button>
+                        <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

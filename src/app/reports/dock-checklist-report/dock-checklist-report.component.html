@@ -1,0 +1,172 @@
+<div class="card" id="card">
+    <div class="modal-content">
+        <div class="card-header">
+            <h5 id="dialog-auto-name" class="modal-title pull-left">Dock Data Checklist Report</h5>
+        </div>
+        <form [formGroup]="searchForm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                        <label for="from_date" class="mt-2 required">From Date</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="from_date"
+                            formControlName="from_date" placeholder="DD/MM/YYYY" bsDatepicker
+                            [bsConfig]="datePickerConfig"
+                            [ngClass]="{'is-invalid' : searchForm.get('from_date')?.invalid && searchForm.get('from_date')?.touched}">
+                        <div class="invalid-feedback">From date is required.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                        <label for="from_shift_code" class="mt-2 wd-10 required">From Shift</label>
+                        <select class="form-dropdown mt-2" formControlName="from_shift_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('from_shift_code')?.invalid && searchForm.get('from_shift_code')?.touched}">
+                            <option value="" selected>Select Shift</option>
+                            <option Value="1">Morning</option>
+                            <option Value="2">Evening</option>
+                        </select>
+                        <div class="invalid-feedback">Please select from shift.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-2col-ld-2 col-xl-2">
+                        <label for="to_date" class="mt-2 required">To Date</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="to_date"
+                            formControlName="to_date" placeholder="DD/MM/YYYY" bsDatepicker
+                            [bsConfig]="datePickerConfig"
+                            [ngClass]="{'is-invalid' : searchForm.get('to_date')?.invalid && searchForm.get('to_date')?.touched}">
+                        <div class="invalid-feedback">Todate is required.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                        <label for="to_shift_code" class="mt-2 wd-10 required">To Shift</label>
+                        <select class="form-dropdown mt-2" formControlName="to_shift_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('to_shift_code')?.invalid && searchForm.get('to_shift_code')?.touched}">
+                            <option value="" selected>Select Shift</option>
+                            <option Value="1">Morning</option>
+                            <option Value="2">Evening</option>
+                        </select>
+                        <div class="invalid-feedback">Please select to shift.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="company_code" class="mt-2 wd-10 required">Company</label>
+                        <select class="form-dropdown mt-2" formControlName="company_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('company_code')?.invalid && searchForm.get('company_code')?.touched}"
+                            (change)="PlantDropDown($event)">
+                            <option value="" selected>Select Company</option>
+                            <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select company name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="plant_code" class="mt-2 wd-10 required">Plant</label>
+                        <select class="form-dropdown mt-2" formControlName="plant_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('plant_code')?.invalid && searchForm.get('plant_code')?.touched}"
+                            (change)="MCCDropDown($event)">
+                            <option value="" selected>Select Plant</option>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select plant name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="mcc_code" class="mt-2 wd-10 required">MCC</label>
+                        <select class="form-dropdown mt-2" formControlName="mcc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}"
+                            (change)="BMCDropDown($event)">
+                            <option value="" selected>Select MCC</option>
+                            <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select mcc name.</div>
+                    </div>
+
+                    <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="bmc_code" class="mt-2 wd-10 required">BMC</label>
+                        <select class="form-dropdown mt-2" formControlName="bmc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_code')?.invalid && searchForm.get('bmc_code')?.touched}"
+                            (change)="MPPDropDown($event)">
+                            <option value="" selected>Select BMC</option>
+                            <option *ngFor="let text of this.bmcDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select bmc name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="mpp_code" class="mt-2 wd-10">MPP</label>
+                        <select class="form-dropdown mt-2" formControlName="mpp_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('mpp_code')?.invalid && searchForm.get('mpp_code')?.touched}"
+                            (change)="FarmerDropDown($event)">
+                            <option value="" selected>Select MPP</option>
+                            <option *ngFor="let text of this.mppDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select mpp name.</div>
+                    </div>
+                    <!-- <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                        <label for="member_code" class="mt-2 wd-10">Farmer</label>
+                        <select class="form-dropdown mt-2" formControlName="member_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('member_code')?.invalid && searchForm.get('member_code')?.touched}">
+                            <option value="" selected>Select Farmer</option>
+                            <option *ngFor="let text of this.farmerDropDown" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select farmer name.</div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn_form" (click)="dockCheckList()"
+                    [disabled]="!searchForm.valid">Search</button>
+                <button type="button" class="btn btn_form">Cancel</button>
+                <!-- <button type="button" class="btn btn_form" [disabled]="!searchForm.valid">Downlod Report</button> -->
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine"
+            [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+            [headerHeight]="30">
+        </ag-grid-angular> -->
+        <!-- <table class="table table-sm table-responsive table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">Sr.No</th>
+                <th scope="col">BMC Name</th>
+                <th scope="col">RouteName</th>
+                <th scope="col">MPP Name</th>
+                <th scope="col">MPP Code</th>
+                <th scope="col">Date</th>
+                <th scope="col">Shift</th>
+                <th scope="col">A Qtr(Ltr)</th>
+                <th scope="col">A Fat</th>
+                <th scope="col">A SNF</th>
+                <th scope="col">A FatKg</th>
+                <th scope="col">A SNFKg</th>
+                <th scope="col">A Amount</th>
+                <th scope="col">C Qtr(Ltr)</th>
+                <th scope="col">C Fat</th>
+                <th scope="col">C SNF</th>
+                <th scope="col">C FatKg</th>
+                <th scope="col">C SNFKg</th>
+                <th scope="col">C Amount</th>
+                <th scope="col">AC Qtr(Ltr)</th>
+                <th scope="col">AC SNF</th>
+                <th scope="col">AC FatKg</th>
+                <th scope="col">AC SNFkg</th>
+                <th scope="col">AC Amount</th>
+                <th scope="col">Bonus Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+              </tr>
+            </tbody>
+          </table> -->
+    </div>

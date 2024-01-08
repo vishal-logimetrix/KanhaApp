@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            MCC Master
+            <a href="javascript:void()" [routerLink]="['/entity/mcc']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/entity/mcc/list']"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                    <select class="form-dropdown mt-2"(change)="PlantDropDown()" disabled>
+                        <option value="" selected>Select Company</option>
+                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                    [ngClass]="{'is-invalid' : createForm.get('company_code')?.invalid && createForm.get('company_code')?.touched}"
+                    (change)="PlantDropDown($event)">
+                    <option value="" selected>Select Company</option>
+                    <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                        {{text.text}}
+                    </option>
+                </select> -->
+                    <div class="invalid-feedback">Please select company name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                    <select class="form-dropdown mt-2" disabled>
+                        <!-- <option value="" selected>Select Plant</option> -->
+                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                    [ngClass]="{'is-invalid' : createForm.get('plant_code')?.invalid && createForm.get('plant_code')?.touched}">
+                    <option value="" selected>Select Plant</option>
+                    <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                        {{text.text}}
+                    </option>
+                </select> -->
+                    <div class="invalid-feedback">Please select plant name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="mcc_code" class="mt-2 required">MCC Code</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="mcc_code"
+                        id="mcc_code"
+                        [ngClass]="{'is-invalid' : createForm.get('mcc_code')?.errors && createForm.get('mcc_code')?.touched}"
+                        placeholder="MCC Code">
+                    <div class="invalid-feedback">Please enter a mcc code.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="mcc_name" class="mt-2 required">MCC Name</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="mcc_name"
+                        id="mcc_name"
+                        [ngClass]="{'is-invalid' : createForm.get('mcc_name')?.errors && createForm.get('mcc_name')?.touched}"
+                        placeholder="MCC Name">
+                    <div class="invalid-feedback">Please enter a mcc name.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-6">
+                    <label for="address">MCC Address</label>
+                    <textarea class="form-control form-control-sm" id="address" rows="3"
+                        formControlName="address"></textarea>
+                </div>
+                <div class="form-check pl-3 mt-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <input class="form-check-input" formControlName="is_active" type="checkbox" value="true"
+                        id="is_active">
+                    <label class="form-check-label" for="is_active">
+                        Is Active
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">Submit</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

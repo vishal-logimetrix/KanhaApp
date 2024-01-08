@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Product Master
+            <a href="javascript:void()" [routerLink]="['/product/master']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/product/master/list']"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <!-- <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"></i> -->
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_type" class="mt-2">Product Type<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" formControlName="product_type" onload="ProductTypeDropDown('product_type')"
+                        [ngClass]="{'is-invalid' : createForm.get('product_type')?.invalid && createForm.get('product_type')?.touched}">
+                        <option value="" selected>Select Product Type</option>
+                        <option *ngFor="let text of this.productTypeDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please enter a product type.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_code" class="mt-2">Product Code<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="product_code"
+                        id="product_code"
+                        [ngClass]="{'is-invalid' : createForm.get('product_code')?.errors && createForm.get('product_code')?.touched}"
+                        placeholder="Code">
+                    <div class="invalid-feedback">Please enter a product code.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_name" class="mt-2">Product Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="product_name"
+                        id="product_name"
+                        [ngClass]="{'is-invalid' : createForm.get('product_name')?.errors && createForm.get('product_name')?.touched}"
+                        placeholder="Name">
+                    <div class="invalid-feedback">Please enter a product name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_short_name" class="mt-2">Product Short Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="product_short_name"
+                        id="product_short_name"
+                        [ngClass]="{'is-invalid' : createForm.get('product_short_name')?.errors && createForm.get('product_short_name')?.touched}"
+                        placeholder="Short Name">
+                    <div class="invalid-feedback">Please enter a product short name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_sku" class="mt-2">SKU</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="product_sku"
+                        id="product_sku" placeholder="SKU">
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="product_unit" class="mt-2">Product Unit<span class="text-danger">*</span></label>
+                    <select class="form-dropdown mt-2" formControlName="product_unit" onload="ProductUnitDropDown('product_unit')"
+                        [ngClass]="{'is-invalid' : createForm.get('product_unit')?.invalid && createForm.get('product_unit')?.touched}">
+                        <option value="" selected>Select Product Unit</option>
+                        <option *ngFor="let text of this.productUnitDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="base_price" class="mt-2">Base Price<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="base_price"
+                        id="base_price"
+                        [ngClass]="{'is-invalid' : createForm.get('base_price')?.errors && createForm.get('base_price')?.touched}"
+                        placeholder="0.00">
+                    <div class="invalid-feedback">Please enter a base rate.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="current_market_price" class="mt-2">Current Market Price<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="current_market_price"
+                        id="current_market_price"
+                        [ngClass]="{'is-invalid' : createForm.get('current_market_price')?.errors && createForm.get('current_market_price')?.touched}"
+                        placeholder="0.00">
+                    <div class="invalid-feedback">Please enter a current market price.</div>
+                </div>
+                <div class="form-check pl-3 mt-5 col-sm-2 col-md-2 col-ld-2 col-xl-2">
+                    <input class="form-check-input" formControlName="is_active" type="checkbox" value="true"
+                        id="is_active">
+                    <label class="form-check-label" for="is_active">
+                        Is Active
+                    </label>
+                </div>
+                <div class="form-check pl-3 mt-5 col-sm-2 col-md-2 col-ld-2 col-xl-2">
+                    <input class="form-check-input" formControlName="allow_indent" type="checkbox" value="true"
+                        id="allow_indent">
+                    <label class="form-check-label" for="allow_indent">
+                        Allow Indent
+                    </label>
+                </div>
+                <div class="form-check pl-3 mt-5 col-sm-2 col-md-2 col-ld-2 col-xl-2">
+                    <input class="form-check-input" formControlName="allow_sale" type="checkbox" value="true"
+                        id="allow_sale">
+                    <label class="form-check-label" for="allow_sale">
+                        Allow Sale
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">{{this.button_name}}</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,196 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Farmer Milk Collection
+            <a href="javascript:void()" [routerLink]="['/farmer/collection']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/farmer/collection/list']"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <!-- <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"></i> -->
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()" class="createForm">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                    <select class="form-dropdown mt-2" (change)="PlantDropDown()" disabled>
+                        <!-- <option value="" selected>Select Company</option> -->
+                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                        [ngClass]="{'is-invalid' : createForm.get('company_code')?.invalid && createForm.get('company_code')?.touched}"
+                        (change)="PlantDropDown()">
+                        <option value="" selected>Select Company</option>
+                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select> -->
+                    <div class="invalid-feedback">Please select company name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                    <select class="form-dropdown mt-2" (change)="MCCDropDown()" disabled>
+                        <!-- <option value="" selected>Select Plant</option> -->
+                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                        [ngClass]="{'is-invalid' : createForm.get('plant_code')?.invalid && createForm.get('plant_code')?.touched}"
+                        (change)="MCCDropDown()">
+                        <option value="" selected>Select Plant</option>
+                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select> -->
+                    <div class="invalid-feedback">Please select plant name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="mcc_code" class="mt-2 wd-10 required">Select MCC</label>
+                    <select class="form-dropdown mt-2" formControlName="mcc_code"
+                        [ngClass]="{'is-invalid' : createForm.get('mcc_code')?.invalid && createForm.get('mcc_code')?.touched}"
+                        (change)="BMCDropDown($event)">
+                        <option value="" selected>Select MCC</option>
+                        <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select mcc name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="bmc_code" class="mt-2 wd-10 required">Select BMC</label>
+                    <select class="form-dropdown mt-2" formControlName="bmc_code"
+                        [ngClass]="{'is-invalid' : createForm.get('bmc_code')?.invalid && createForm.get('bmc_code')?.touched}"
+                        (change)="MPPDropDown($event)">
+                        <option value="" selected>Select BMC</option>
+                        <option *ngFor="let text of this.bmcDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select bmc name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="mpp_code" class="mt-2 wd-10 required">Select MPP</label>
+                    <select class="form-dropdown mt-2" formControlName="mpp_code"
+                        [ngClass]="{'is-invalid' : createForm.get('mpp_code')?.invalid && createForm.get('mpp_code')?.touched}"
+                        (change)="FarmerDropDown($event)">
+                        <option value="" selected>Select MPP</option>
+                        <option *ngFor="let text of this.mppDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select mpp name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2col-ld-2 col-xl-2">
+                    <label for="collection_date" class="mt-2 required">Collection Date</label>
+                    <input type="text" class="form-control form-control-sm mt-2" id="collection_date"
+                        formControlName="collection_date" placeholder="DD/MM/YYYY" bsDatepicker
+                        [bsConfig]="datePickerConfig"
+                        [ngClass]="{'is-invalid' : createForm.get('collection_date')?.invalid && createForm.get('collection_date')?.touched}">
+                        <div class="invalid-feedback">Collection date is required.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="shift_code" class="mt-2 wd-10 required">Select Shift</label>
+                    <select class="form-dropdown mt-2" formControlName="shift_code"
+                        [ngClass]="{'is-invalid' : createForm.get('shift_code')?.invalid && createForm.get('shift_code')?.touched}">
+                        <option value="" selected>Select Shift</option>
+                        <option Value="1">Morning</option>
+                        <option Value="2">Evening</option>
+                    </select>
+                    <div class="invalid-feedback">Please select shift.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="member_code" class="mt-2 wd-10 required">Select Farmer</label>
+                    <select class="form-dropdown mt-2" formControlName="member_code"
+                        [ngClass]="{'is-invalid' : createForm.get('member_code')?.invalid && createForm.get('member_code')?.touched}">
+                        <option value="" selected>Select Farmer</option>
+                        <option *ngFor="let text of this.farmerDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select farmer name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="milk_type_code" class="mt-2 wd-10 required">Milk Type</label>
+                    <select class="form-dropdown mt-2" formControlName="milk_type_code"
+                        [ngClass]="{'is-invalid' : createForm.get('milk_type_code')?.invalid && createForm.get('milk_type_code')?.touched}"
+                        (change)="GetRate()">
+                        <option value="" selected>Select Milk Type</option>
+                        <option *ngFor="let text of this.milkTypeDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select milk type.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="milk_quality_type_code" class="mt-2 wd-10 required">Milk Quality Type</label>
+                    <select class="form-dropdown mt-2" formControlName="milk_quality_type_code"
+                        [ngClass]="{'is-invalid' : createForm.get('milk_quality_type_code')?.invalid && createForm.get('milk_quality_type_code')?.touched}">
+                        <option value="" selected>Select Milk Quality Type</option>
+                        <option *ngFor="let text of this.milkQualityTypeDropDown; let i = index" [ngValue]="text.value">
+                            <!-- [attr.selected]='i>=0 ? "selected" : null' -->
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select milk quality type.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="qty" class="mt-2 required">Qty</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="qty"
+                        id="qty"
+                        [ngClass]="{'is-invalid' : createForm.get('qty')?.errors && createForm.get('qty')?.touched}"
+                        (input)="CalculateAmount()">
+                        <div class="invalid-feedback">QTY is required.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="fat" class="mt-2 required">FAT</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="fat"
+                        id="fat"
+                        [ngClass]="{'is-invalid' : createForm.get('fat')?.errors && createForm.get('fat')?.touched}"
+                        (change)="GetRate()">
+                        <div class="invalid-feedback">FAT is required.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="snf" class="mt-2 required">SNF</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="snf"
+                        id="snf"
+                        [ngClass]="{'is-invalid' : createForm.get('snf')?.errors && createForm.get('snf')?.touched}"
+                        (change)="GetRate()">
+                        <div class="invalid-feedback">SNF is required.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="clr" class="mt-2">CLR</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="clr" id="clr"
+                    (change)="GetRate()">
+                </div>
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="rate" class="mt-2 required">RTPL</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="rate"
+                        id="rate"
+                        [ngClass]="{'is-invalid' : createForm.get('rate')?.errors && createForm.get('rate')?.touched}"
+                       readonly>
+                        <div class="invalid-feedback">RTPL is required.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-1 col-ld-1 col-xl-1">
+                    <label for="amount" class="mt-2 required">Amount</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="amount"
+                        id="amount"
+                        [ngClass]="{'is-invalid' : createForm.get('amount')?.errors && createForm.get('amount')?.touched}" 
+                        readonly>
+                        <div class="invalid-feedback">AMT is required.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">Submit</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+        </div>
+</div>

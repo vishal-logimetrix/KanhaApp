@@ -1,0 +1,167 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12" style=" background-color: lightblue; margin-top: 20px;">
+          Village List
+          <a href="javascript:void()" (click)="exportDataToExcel()"><i class="fa fa-upload" title="Download as Excel"
+            style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+          <a href="javascript:void()" (click)="showModal()"><i class="fa fa-search"
+              style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+      </div>
+  </div>
+  <div class="row">
+    <div class="search">
+        <form [formGroup]="searchForm">
+         <mat-form-field appearance="fill">
+             <mat-label>Search Village</mat-label>
+             <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+             <mat-icon matSuffix class="fa fa-search"></mat-icon>
+           </mat-form-field>
+       </form>
+   </div>
+      <div class="col-md-12">
+          <ag-grid-angular style="width: 100%; height: 300px; margin-top: 10px;" class="ag-theme-alpine"
+              [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+              [headerHeight]="30" [components]="frameworkComponents">
+          </ag-grid-angular>
+      </div>
+  </div>
+</div>
+<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+      class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 id="dialog-auto-name" class="modal-title pull-left">Village Search</h5>
+                  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                      <span aria-hidden="true" class="visually-hidden">&times;</span>
+                  </button>
+              </div>
+              <form [formGroup]="searchForm">
+                  <div class="modal-body">
+
+                      <div class="row">
+                          <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                              <label for="state_code" class="mt-2 wd-10 required">Select State</label>
+                                  <select class="form-dropdown mt-2"
+                                  (change)="DistrictDropdown()" disabled>
+                                      <!-- <option value="" selected>Select State</option> -->
+                                      <option *ngFor="let text of this.stateDropDown" [ngValue]="text.value" selected>
+                                          {{text.text}}
+                                      </option>
+                                  </select>
+                                  <!-- <select class="form-dropdown mt-2" formControlName="state_code"
+                                  [ngClass]="{'is-invalid' : searchForm.get('state_code')?.invalid && searchForm.get('state_code')?.touched}"
+                                  (change)="DistrictDropdown($event)">
+                                      <option value="" selected>Select State</option>
+                                      <option *ngFor="let text of this.stateDropDown" [ngValue]="text.value">
+                                          {{text.text}}
+                                      </option>
+                                  </select> -->
+                                  <div class="invalid-feedback">Please select State name.</div>
+                          </div>
+                          <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                              <label for="district_code" class="mt-2 wd-10 required">Select District</label>
+                                  <select class="form-dropdown mt-2" formControlName="district_code"
+                                  [ngClass]="{'is-invalid' : searchForm.get('district_code')?.invalid && searchForm.get('district_code')?.touched}"
+                                  (change)="TehsilDropdown()">
+                                      <option value="" selected>Select District</option>
+                                      <option *ngFor="let text of this.districtDropDown" [ngValue]="text.value">
+                                          {{text.text}}
+                                      </option>
+                                  </select>
+                                  <div class="invalid-feedback">Please select district name.</div>
+                          </div>
+                          <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                              <label for="tehsil_code" class="mt-2 wd-10 required">Select Tehsil</label>
+                                  <select class="form-dropdown mt-2" formControlName="tehsil_code"
+                                  [ngClass]="{'is-invalid' : searchForm.get('tehsil_code')?.invalid && searchForm.get('tehsil_code')?.touched}"
+                                  >
+                                      <option value="" selected>Select Tehsil</option>
+                                      <option *ngFor="let text of this.tehsilDropDown" [ngValue]="text.value">
+                                          {{text.text}}
+                                      </option>
+                                  </select>
+                                  <div class="invalid-feedback">Please select tehsil name.</div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn_form"
+                          (click)="VillageList()">Search</button>
+                      <!-- <button type="button" class="btn btn_form" [disabled]="!searchForm.valid"
+                          (click)="VillageList()">Search</button> -->
+                      <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 id="dialog-auto-name" class="modal-title pull-left required">Update Tehsil</h5>
+              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+          </div>
+          <form [formGroup]="searchForm" (ngSubmit)="Update()">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">state Code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="state_code" formControlName="state_code"
+                          placeholder="State code">
+                      <div class="invalid-feedback">Please enter a state Code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">state Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="state_name" formControlName="state_name"
+                          placeholder="state Name">
+                      <div class="invalid-feedback">Please enter a state name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">district code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="district_code" formControlName="district_code" placeholder="district code">
+                      <div class="invalid-feedback">Please enter district code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">district Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="district_name" formControlName="district_name" placeholder="district Name">
+                      <div class="invalid-feedback">Please enter a district name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">Tehsil Code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="tehsil_code" formControlName="tehsil_code" placeholder="Tehsil code">
+                      <div class="invalid-feedback">Please enter a tehsil code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">Tehsil Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="tehsil_name" formControlName="tehsil_name" placeholder="Tehsil Name">
+                      <div class="invalid-feedback">Please enter a Tehsil name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">Village Code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="village_code" formControlName="village_code" placeholder="Viillage code">
+                      <div class="invalid-feedback">Please enter a Village Code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 required">Village Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="village_name" formControlName="village_name" placeholder="Village Name">
+                      <div class="invalid-feedback">Please enter a Village name.</div>
+                    </div>
+                    </div>
+                  </div>
+              <div class="modal-footer">
+                <div class="row">
+                    <div>
+                        <button type="submit" class="btn btn_form " >Update</button> <!--[disabled]="!searchForm.valid"-->
+                        <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                    </div>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="modal-header">
+      <h2 class="modal-title ml-auto pl-5" id="exampleModalLabel">
+        <span>Register Your Phone Number</span>
+      </h2>
+      <button type="button" class="close pull-right" (click)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="mob-field">
+        <input class="form-control" type="number" name="mobile" placeholder="Enter your Mobile number" [(ngModel)]="mobile" required>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-center m-3">
+      <button type="submit" class="btn btn-primary" (click)="mobileNumber()" [disabled]="!mobile">Submit</button>
+      <button type="button" class="btn btn-dark btn-pill" (click)="onClose()">Close</button>
+    </div>
+  </div>
+  

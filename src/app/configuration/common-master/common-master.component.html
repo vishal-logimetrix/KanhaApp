@@ -1,0 +1,150 @@
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Common Master
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <label for="common_key" class="mt-2 wd-10 required">Select Common Master</label>
+                    <select class="form-dropdown mt-2" formControlName="common_key"
+                        [ngClass]="{'is-invalid' : createForm.get('common_key')?.invalid && createForm.get('common_key')?.touched}"
+                        (change)="CommonMasterList()">
+                        <option value="" selected>Select Common Master</option>
+                        <option *ngFor="let text of this.commonMasterKeyDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select common master.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <label for="common_value" class="mt-2 required">Common Value</label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="common_value" id="common_value"
+                        [ngClass]="{'is-invalid' : createForm.get('common_value')?.errors && createForm.get('common_value')?.touched}"
+                        placeholder="Common Value">
+                    <div class="invalid-feedback">Please enter a common value.</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">Submit</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue; margin-top: 20px;">
+            Common Master List
+            <a href="javascript:void()" ><i class="fa fa-plus" style="float: right;margin: 3px;font-size: larger;" (click)="addCommonMaster()" title="Add the Milk Quality type here."> </i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="createForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search Route</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 380px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Update Common Master</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Id</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="Id" formControlName="Id" placeholder="Id">
+                        <div class="invalid-feedback">Please enter a Id.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">common key</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="common_key" formControlName="common_key" placeholder="common kay">
+                        <div class="invalid-feedback">Please enter a common kay.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4 mt-5">
+                        <label for="bmc_name" class="mt-2 required">common Value</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="common_value" formControlName="common_value" placeholder="common Value">
+                        <div class="invalid-feedback">Please enter a common value.</div>
+                      </div>
+                      </div>
+                    </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " >Update</button> <!--[disabled]="!searchForm.valid"-->
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="isAddModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 id="dialog-auto-name" class="modal-title pull-left required">Add Common Master</h5>
+              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+          </div>
+          <form [formGroup]="createForm" (ngSubmit)="Create()">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="common_key" class="mt-2 wd-10 required">Select Common Master</label>
+                    <select class="form-dropdown mt-2" formControlName="common_key"
+                        [ngClass]="{'is-invalid' : createForm.get('common_key')?.invalid && createForm.get('common_key')?.touched}"
+                        (change)="CommonMasterList()">
+                        <option value="" selected>Select Common Master</option>
+                        <option *ngFor="let text of this.commonMasterKeyDropDown" [ngValue]="text.value">
+                            {{text.text}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">Please select common master.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4 ">
+                        <label for="common_value" class="mt-2 required">Common Value</label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="common_value" id="common_value"
+                            [ngClass]="{'is-invalid' : createForm.get('common_value')?.errors && createForm.get('common_value')?.touched}"
+                            placeholder="Common Value">
+                        <div class="invalid-feedback">Please enter a common value.</div>
+                    </div>
+                    </div>
+                  </div>
+              <div class="modal-footer">
+                <div class="row">
+                    <div>
+                        <button type="submit" class="btn btn_form mt-5">Submit</button>  <!-- [disabled]="!createForm.valid"-->
+                        <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px" (click)="hideModal()">Close</button>
+                    </div>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12" style=" background-color: lightblue;">
+        User Org Mapping - <b> {{this._userData?.user_name}}</b>
+        <a href="javascript:void()" [routerLink]="['/user']"><i class="fa fa-plus"
+                style="float: right;margin: 3px;font-size: larger;"> </i></a>
+        <a href="javascript:void()" [routerLink]="['/user/list']"><i class="fa fa-search"
+                style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+        <!-- <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;"></i> -->
+    </div>
+    <div class="col-md-12 content_detail_area ">
+        <div class="col-sm-12 margin_top_3">
+            <label class="dualListBoxHeader">Company</label>
+            <dual-list [key]="'company_code'" [filter]="true" [display]="displayCompany" [source]="companySource"
+                [(destination)]="companyTarget" (destinationChange)="companyChange()" height="150px">
+            </dual-list>
+        </div>
+        <div class="col-sm-12 margin_top_23">
+            <label class="dualListBoxHeader">Plant</label>
+            <dual-list [key]="'plant_code'" [filter]="true" [display]="displayPlant" [source]="plantSource"
+                [(destination)]="plantTarget" (destinationChange)="plantChange()" height="150px"></dual-list>
+        </div>
+        <div class="col-sm-12 margin_top_23">
+            <label class="dualListBoxHeader">MCC</label>
+            <dual-list [key]="'mcc_code'" [filter]="true" [display]="displayMcc" [source]="mccSource"
+                [(destination)]="mccTarget" (destinationChange)="mccChange()" height="150px"></dual-list>
+        </div>
+        <div class="col-sm-12 margin_top_23">
+            <label class="dualListBoxHeader">BMC</label>
+            <dual-list [key]="'bmc_code'" [filter]="true" [display]="displayBmc" [source]="bmcSource"
+                [(destination)]="bmcTarget" (destinationChange)="bmcChange()" height="150px"></dual-list>
+        </div>
+        <div class="col-sm-12 margin_top_23">
+            <label class="dualListBoxHeader">MPP</label>
+            <dual-list [key]="'mpp_code'" [filter]="true" [display]="displayMpp" [source]="mppSource"
+                [(destination)]="mppTarget" height="150px"></dual-list>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <button type="submit" (click)="orgMap()" class="btn btn_form mt-5 btn_margin_left_10px">Save</button>
+        <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+/* Target the pagination background */
+.pagination.custom-pagination {
+    background-color: transparent; /* Set the background color to transparent */
+  }
+  .card{
+    margin-top: 5%;
+  }
+  .search{
+    margin: 10px 0px -18px 10px;
+    background: #e6f1f8;
+    /* background-color: inherit !important;
+    background: transparent !important; */
+  }
+
+  .newTable {
+    display: flex;
+    /* justify-content: center; */
+  }
+  
+  table {
+    /* text-align: center; */
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    border: 1px solid #dddddd;
+  }
+  
+  th {
+    background-color: #003b9a;
+    color: white;
+    font-size: medium;
+    vertical-align: middle !important;
+    /* text-align: center !important; */
+  }
+  
+  .mat-cell {
+    /* text-align: center; */
+    vertical-align: middle !important; 
+    /* text-align: center !important; */
+
+  }
+  

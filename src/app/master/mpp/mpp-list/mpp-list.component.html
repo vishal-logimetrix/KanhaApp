@@ -1,0 +1,331 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            MPP List
+            <a href="javascript:void()"><i class="fa fa-plus" style="float: right;margin: 3px;font-size: larger;" (click)="AddMPP()"> </i></a> <!--[routerLink]="['/entity/mpp']"-->
+            <a href="javascript:void()" [routerLink]="['/entity/mpp/mpp-list']" (click)="showModal()"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;" (click)="exportDataToExcel()" title="downlod in excel"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="searchForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search MPP</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+        class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="dialog-auto-name" class="modal-title pull-left">MPP Search</h5>
+                    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true" class="visually-hidden">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="searchForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                                    <select class="form-dropdown mt-2" (change)="PlantDropDown()" disabled>
+                                        <!-- <option value="" selected>Select Company</option> -->
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="company_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('company_code')?.invalid && searchForm.get('company_code')?.touched}"
+                                    (change)="PlantDropDown()" >
+                                        <option value="" selected>Select Company</option>
+                                        <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select company name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                                    <select class="form-dropdown mt-2" (change)="MCCDropDown()" disabled>
+                                        <!-- <option value="" selected>Select Plant</option> -->
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <!-- <select class="form-dropdown mt-2" formControlName="plant_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('plant_code')?.invalid && searchForm.get('plant_code')?.touched}"
+                                    (change)="MCCDropDown()">
+                                        <option value="" selected>Select Plant</option>
+                                        <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select> -->
+                                    <div class="invalid-feedback">Please select plant name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="mcc_code" class="mt-2 wd-10 required">Select MCC</label>
+                                    <select class="form-dropdown mt-2" formControlName="mcc_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}"
+                                    (change)="BMCDropDown($event)">
+                                        <option value="" selected>Select MCC</option>
+                                        <option *ngFor="let text of this.mccDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select mcc name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="bmc_code" class="mt-2 wd-10 required">Select BMC</label>
+                                    <select class="form-dropdown mt-2" formControlName="bmc_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('bmc_code')?.invalid && searchForm.get('bmc_code')?.touched}"
+                                    (change)="RouteDropDown($event)">
+                                        <option value="" selected>Select BMC</option>
+                                        <option *ngFor="let text of this.bmcDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select bmc name.</div>
+                            </div>
+                            <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                                <label for="route_code" class="mt-2 wd-10 required">Select Route</label>
+                                    <select class="form-dropdown mt-2" formControlName="route_code"
+                                    [ngClass]="{'is-invalid' : searchForm.get('route_code')?.invalid && searchForm.get('route_code')?.touched}">
+                                        <option value="" selected>Select Route</option>
+                                        <option *ngFor="let text of this.routeDropDown" [ngValue]="text.value">
+                                            {{text.text}}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select route name.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_form" (click)="SearchMPP()">Search</button> <!--[disabled]="!searchForm.valid"-->
+                        <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Update MPP</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">BMC Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="bmc_code"
+                            placeholder="BMC code">
+                        <div class="invalid-feedback">Please enter a BMC Code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">BMC Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="bmc_name"
+                            placeholder="BMC Name">
+                        <div class="invalid-feedback">Please enter a BMC name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mpp_code" class="mt-2 required">MPP Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="mpp_code" formControlName="mpp_code"
+                            placeholder="MPP Code">
+                        <div class="invalid-feedback">Please enter a MPP Code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mpp_name" class="mt-2 required">MPP Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="mpp_name" formControlName="mpp_name"
+                            placeholder="MPP Name">
+                        <div class="invalid-feedback">Please enter a MPP name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Route Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="route_code"
+                            placeholder="BMC Name" [ngClass]="{'is-invalid' : searchForm.get('route_code')?.invalid && searchForm.get('route_code')?.touched}">
+                        <div class="invalid-feedback">Please enter a Route Code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Route Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="route_name"
+                            placeholder="Route Name" [ngClass]="{'is-invalid' : searchForm.get('route_name')?.invalid && searchForm.get('route_name')?.touched}">
+                        <div class="invalid-feedback">Please enter a route name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mpp_short_name" class="mt-2 required">MPP Short Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="mpp_short_name" formControlName="mpp_short_name" placeholder="MPP short Name" [ngClass]="{'is-invalid' : searchForm.get('mpp_short_name')?.invalid && searchForm.get('mpp_short_name')?.touched}">
+                        <div class="invalid-feedback">Please enter a route name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mpp_old_code" class="mt-2 required">MPP Old Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="mpp_old_code" formControlName="mpp_old_code"
+                            placeholder="MPP Old Name" [ngClass]="{'is-invalid' : searchForm.get('mpp_old_code')?.invalid && searchForm.get('mpp_old_code')?.touched}">
+                        <div class="invalid-feedback">Please enter a route name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Address</label>
+                        <input type="text" class="form-control form-control-sm mt-2"  id="address" formControlName="address"
+                            placeholder="Address" [ngClass]="{'is-invalid' : searchForm.get('address')?.invalid && searchForm.get('address')?.touched}">
+                      </div>
+                      <div class="form-check pl-3 mr-5 col-sm-1 col-md-6 col-ld-4 col-xl-3" style="margin-left: 10px;">
+                        <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                        <label class="form-check-label" for="is_active">
+                          Is Active
+                        </label>
+                    </div>
+                      <div class="form-check pl-3 mr-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                        <input class="form-check-input"  type="checkbox" value="true" id="allow_collection_at_bmc" formControlName="allow_collection_at_bmc">
+                        <label class="form-check-label" for="allow_collection_at_bmc">
+                          Allow Collection at BMC
+                        </label>
+                    </div>
+                      </div>
+                    </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " >Update</button> <!--[disabled]="!searchForm.valid"-->
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <div *ngIf="isAddModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 id="dialog-auto-name" class="modal-title pull-left required">Add MPP</h5>
+              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+          </div>
+          <form [formGroup]="searchForm" (ngSubmit)="Create()">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="company_code" class="mt-2 wd-10 required">Select Company</label>
+                        <select class="form-dropdown mt-2" (change)="PlantDropDown()" disabled>
+                            <option *ngFor="let text of this.companyDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="plant_code" class="mt-2 wd-10 required">Select Plant</label>
+                        <select class="form-dropdown mt-2" (change)="MCCDropDownn()" disabled>
+                            <option *ngFor="let text of this.plantDropDown" [ngValue]="text.value" selected>
+                                {{text.text}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="mcc_code" class="mt-2 wd-10 required">Select MCC</label>
+                        <select class="form-dropdown mt-2" formControlName="mcc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('mcc_code')?.invalid && searchForm.get('mcc_code')?.touched}"
+                            (change)="BMCDropDownn($event)">
+                            <option value="" selected>Select MCC</option>
+                            <option *ngFor="let text of this.mccDropDownn" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select mcc name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_code" class="mt-2 wd-10 required">Select BMC</label>
+                        <select class="form-dropdown mt-2" formControlName="bmc_code"
+                            [ngClass]="{'is-invalid' : searchForm.get('bmc_code')?.invalid && searchForm.get('bmc_code')?.touched}"
+                            (change)="RouteDropDownn($event)">
+                            <option value="" selected>Select BMC</option>
+                            <option *ngFor="let text of this.bmcDropDownn" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select bmc name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="route_code" class="mt-2 wd-10 required">Select Route</label>
+                        <select class="form-dropdown mt-2" formControlName="route_code"
+                        [ngClass]="{'is-invalid' : searchForm.get('route_code')?.invalid && searchForm.get('route_code')?.touched}">
+                            <option value="" selected>Select Route</option>
+                            <option *ngFor="let text of this.routeDropDownn" [ngValue]="text.value">
+                                {{text.text}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Please select route name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="mpp_code" class="mt-2 required">MPP Code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="mpp_code" formControlName="mpp_code"
+                          placeholder="MPP Code" [ngClass]="{'is-invalid' : searchForm.get('mpp_code')?.invalid && searchForm.get('mpp_code')?.touched}">
+                      <div class="invalid-feedback">Please enter mpp code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="mpp_name" class="mt-2 required">MPP Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="mpp_name" formControlName="mpp_name" placeholder="MPP Name" [ngClass]="{'is-invalid' : searchForm.get('mpp_name')?.invalid && searchForm.get('mpp_name')?.touched}">
+                      <div class="invalid-feedback">Please enter a MPP name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="mpp_old_code" class="mt-2 required">MPP Old Code</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="mpp_old_code" formControlName="mpp_old_code"
+                          placeholder="MPP Old Code" [ngClass]="{'is-invalid' : searchForm.get('mpp_old_code')?.invalid && searchForm.get('mpp_old_code')?.touched}">
+                      <div class="invalid-feedback">Please enter a MPP Old code.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="mpp_short_name" class="mt-2 required">MPP Short Name</label>
+                      <input type="text" class="form-control form-control-sm mt-2" id="mpp_short_name" formControlName="mpp_short_name"
+                          placeholder="MPP Short Name" [ngClass]="{'is-invalid' : searchForm.get('mpp_short_name')?.invalid && searchForm.get('mpp_short_name')?.touched}">
+                      <div class="invalid-feedback">Please enter a MPP short name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                      <label for="bmc_name" class="mt-2 ">Address</label>
+                      <input type="text" class="form-control form-control-sm mt-2"  id="address" formControlName="address"
+                          placeholder="Address" >
+                    </div>
+                    <div class="form-check pl-3 mt-5 mr-5 col-sm-1 col-md-6 col-ld-4 col-xl-3" style="margin-left: 10px;">
+                      <input class="form-check-input"  type="checkbox" value="true" id="is_active" formControlName="is_active">
+                      <label class="form-check-label" for="is_active">
+                        Is Active
+                      </label>
+                  </div>
+                    <div class="form-check pl-3 mt-5 mr-5 col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                      <input class="form-check-input"  type="checkbox" value="true" id="allow_collection_at_bmc" formControlName="allow_collection_at_bmc">
+                      <label class="form-check-label" for="allow_collection_at_bmc">
+                        Allow Collection at BMC
+                      </label>
+                  </div>
+                    </div>
+                  </div>
+              <div class="modal-footer">
+                <div class="row">
+                    <div>
+                        <button type="submit" class="btn btn_form " >Add</button> <!--[disabled]="!searchForm.valid"-->
+                        <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                    </div>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+</div>

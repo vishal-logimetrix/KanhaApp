@@ -1,0 +1,147 @@
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <nav class="sidebar">
+          <div class="text">
+            <img src="assets/img/vaikom_logo.png" alt="">
+          </div>
+          <ul>
+            <li><a [routerLink]="['/home/dashboard']">Dashboard</a></li>
+            <li>
+              <a href="javascript:void(0)" (click)="toggleMaster()" [class.rotate]="showMaster">
+                Master
+                <span class="fa fa-caret-down first"></span>
+              </a>
+              <ul *ngIf="showMaster" class="feat-show">
+                <li>
+                  <a href="javascript:void(0)" (click)="toggleGeo()" [class.rotate]="showState">
+                    GEO
+                    <span class="fa fa-caret-down first"></span>
+                  </a>
+                  <ul *ngIf="showState" class="serv-show">
+                    <li><a [routerLink]="['/geo/state']">State</a></li>
+                    <li><a [routerLink]="['/geo/district']">District</a></li>
+                    <li><a [routerLink]="['/geo/tehsil']">Tehsil</a></li>
+                    <li><a [routerLink]="['/geo/village']">Village</a></li>
+                    <!-- <li><a href="javascript:void(0)">Hemlate</a></li> -->
+                  </ul>
+                </li>
+                <li><a href="javascript:void(0)" (click)="toggleCompany()" [class.rotate]="showCompany">
+                  Entity
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showCompany" class="serv-show">
+                  <li><a [routerLink]="['/entity/company']">Company</a></li>
+                  <li><a [routerLink]="['/entity/plant']">Plant</a></li>
+                  <li><a [routerLink]="['/entity/mcc']">MCC</a></li>
+                  <li><a [routerLink]="['/entity/bmc']">BMC</a></li>
+                  <li><a [routerLink]="['/entity/route']">Route</a></li>
+                  <li><a [routerLink]="['/entity/mpp']">MPP</a></li>
+                  <li><a [routerLink]="['/entity/sahayak']">VSP</a></li>
+                  <li><a [routerLink]="['/entity/farmer']">Farmer</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)=" toggleMilkRate()" [class.rotate]="showMilkRate">
+                  Milk Rate
+                  <span class="fa fa-caret-down first"></span>
+                </a>
+                <ul *ngIf="showMilkRate" class="serv-show">
+                  <li><a [routerLink]="['/milk/rate-master']">Rate Master</a></li>
+                  <li><a [routerLink]="['/milk/rate-applicability']" title="Rate Applicability">Rate Appl..</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" (click)="toggleTransaction()" [class.rotate]="showTransaction">
+                Milk Collection
+                <span class="fa fa-caret-down second"></span>
+              </a>
+              <ul *ngIf="showTransaction" class="serv-show">
+                <li><a href="javascript:void(0)" (click)="toggleCollection()" [class.rotate]="showCollection">
+                  Collecton
+                  <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showCollection" class="serv-show">
+                  <li><a [routerLink]="['/farmer/collection']" title="Farmer Collection">Farmer Coll..</a></li>
+                  <li><a [routerLink]="['/bmc/collection']" title="BMC collection">BMC Colle..</a></li>
+                </ul>
+              </li>
+                <li><a href="javascript:void(0)" (click)="toggleDispatch()" [class.rotate]="showDispatch">
+                  Dispatch
+                  <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showDispatch" class="serv-show">
+                  <li><a [routerLink]="['/Mpp/Dispatch/collection']" title="Farmer Collection" title="MPP Dispatch">MPP Disp..</a></li>
+                </ul>
+              </li>
+              </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleBillRate()" [class.rotate]="showBillRate">
+                    Configuration
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showBillRate" class="serv-show">
+                    <li><a [routerLink]="['/milk/type']">Milk Type</a></li>
+                    <li><a [routerLink]="['/milk/quality/type']">Milk Quality Type</a></li>
+                    <li><a [routerLink]="['/common/master']">Common Master</a></li>
+                    <li><a [routerLink]="['/device/master']">Device Master</a></li>
+                  </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleReport()" [class.rotate]="showReports">
+                    Inventory
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showReports" class="serv-show">
+                    <li><a [routerLink]="['/product/master']">Product Master</a></li>
+                    <li><a [routerLink]="['/product/sale']">Product Sale</a></li>
+                  </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" (click)="toggleUtility()" [class.rotate]="showUtility">
+                    Import Utility
+                    <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showUtility" class="serv-show">
+                    <li><a [routerLink]="['/import/utility']">Master Utility</a></li>
+                  </ul>
+            </li>
+            <li><a href="javascript:void(0)" (click)="toggleSettings()" [class.rotate]="showSettings" >
+                Report
+                <span class="fa fa-caret-down second"></span>
+            </a>
+            <ul *ngIf="showSettings" class="serv-show">
+                <li><a [routerLink]="['/CDA/report']">CDA</a></li>
+                <li><a [routerLink]="['/farmer-master/report']" title="Master Data Report">Master Data</a></li>
+                <li><a href="javascript:void(0)" (click)="toggleFarmer()" [class.rotate]="showFarmerCollection" title="Farmer Collection">
+                  Farmer Colle..
+                  <span class="fa fa-caret-down second"></span>
+                </a>
+                <ul *ngIf="showFarmerCollection" class="serv-show">
+                  <li><a [routerLink]="['/farmer-shift/report']" title="Farmer Shift Report">Farmer Shift..</a></li>
+                  <li><a [routerLink]="['/farmer-summary/report']" title="Farmer Summary report">Farmer Su...</a></li>
+                  <li><a [routerLink]="['/farmer-passbook/report']" title="Farmer Passbook report">Farmer Pass...</a></li>
+                </ul>
+              </li>
+                <li><a [routerLink]="['/mpp-dispatch-summary/report']">MPP dispatch</a></li>
+              </ul>
+        </li>
+            <li><a href="javascript:void(0)" (click)="toggleUser()" [class.rotate]="showUser" >
+                User Managment
+                <span class="fa fa-caret-down second"></span>
+            </a>
+            <ul *ngIf="showUser" class="serv-show">
+                <li><a [routerLink]="['/user']">User Master</a></li>
+                <li><a [routerLink]="['/change/password']">Change Password</a></li>
+              </ul>
+        </li>
+            <li><a [routerLink]="['/login']" >LogOut</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  

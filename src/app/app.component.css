@@ -1,0 +1,49 @@
+/* .header{
+    background-color: #003b9a;
+    height: 2.5em;
+    color: #fff;
+    font-weight: 500;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+.company_name {
+    font-size: large;
+}
+.text img{
+    max-width: 10vw;
+    max-height: 10vh;
+}
+.sidebar {
+    transition: width 0.4s;
+  }
+  .sidebar.collapsed {
+    width: 60px;
+  }
+  .sidebar {
+    transition: all 0.3s;
+  }
+  .sidebar.col-md-0 {
+    width: 0;
+    display: none;
+    overflow: hidden;
+  }
+  .sidebar .toggle-button {
+    margin: 5px;
+  }
+  @media (max-width: 767px) {
+    .sidebar {
+        width: 0;
+        display: none;
+    }
+    .sidebar.collapsed {
+        width: 60px;
+      }
+}
+.toggle-button {
+    display: block;
+    cursor: pointer;
+} */

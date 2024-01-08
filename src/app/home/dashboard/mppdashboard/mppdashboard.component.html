@@ -1,0 +1,889 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-sm-1 col-md-1" style=" background-color: lightblue;">
+      <i class="nav-icon fa fa-tachometer mr-2"></i> <strong><span>HOME</span> </strong><a href="javascript:void()"><i
+          class="fa fa-search" style=" float: right;margin: 3px;font-size: larger;" (click)="showModal()"> </i></a>
+    </div>
+  </div>
+  <div class="display_btn">
+    <div class="mpp">
+      <button class="btn btn-primary" [routerLink]="['/home/dashboard']">BMC</button>
+    </div>
+    <div class="bmc">
+      <button class="btn btn-primary" [routerLink]="['/home/Mpp/dashboard']">MCC</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fa fa-globe"></i></span>
+        <div class="info-box-content box-1">
+          <span class="info-box-text">Total MPPs</span>
+          <span class="info-box-number">
+            {{this.totalPouringMPPAndMPP?.total_active_mpp}}
+          </span>
+          <hr>
+          <span class="info-box-text">Total Pouring MPPs</span>
+          <span class="info-box-number">
+            {{this.totalPouringMPPAndMPP?.total_pouring_mpps}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-balance-scale"></i></span>
+        <div class="info-box-content box-2">
+          <span class="info-box-text">Total Pouring Members</span>
+          <span class="info-box-number">
+            {{this.totalPouringFarmerAndQty?.total_pouring_members}}
+          </span>
+          <hr>
+          <span class="info-box-text">Total Quantity</span>
+          <span class="info-box-number">
+            {{this.totalPouringFarmerAndQty?.total_collection_qty}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-users"></i></span>
+        <div class="info-box-content box-3">
+          <span class="info-box-text">Total Members Active</span>
+          <span class="info-box-number">
+            {{this.totalFarmersDashboard?.total_active_farmers}}
+          </span>
+          <hr>
+          <span class="info-box-text">Total Members DeActive</span>
+          <span class="info-box-number">
+            {{this.totalFarmersDashboard?.total_deactive_farmers}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fa fa-rupee"></i></span>
+        <div class="info-box-content box-4">
+          <span class="info-box-text">Today Product Sales</span>
+          <span class="info-box-number">
+            {{this.todayLocalSale?.total_product_sale_amount}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-lg-3 pr-0 ng-star-inserted">
+      <div class="card h-100 mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <span class="text-custom4 font-bold">
+                Qty (Ltr)
+              </span>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary rounded-pill">
+                <span class="btn-label">
+                  Total: 0
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-wrapper pt-1">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class="">
+                </div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class="">
+                </div>
+              </div>
+            </div>
+            <canvas id="Grade_Chart" basechart="" height="184" class="chart mt-2 chartjs-render-monitor"
+              style="display: block; height: 92px; width: 139px;" width="278">
+              <h1>Hello</h1>
+            </canvas>
+          </div>
+          <div class="row pt-4">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #3182ce;">
+                  ●
+                </span>
+                Morning
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+          <hr class="mt-2 mb-2">
+          <div class="row mt-0">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #63b3ed;">
+                  ●
+                </span>
+                Evening
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----><!---->
+    <div class="col-lg-3 pr-0 ng-star-inserted">
+      <div class="card h-100 mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <span class="text-custom4 font-bold">
+                Milk Type (Ltr)
+              </span>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary rounded-pill">
+                <span class="btn-label">
+                  Total: 0
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class="">
+                </div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class="">
+                </div>
+              </div>
+            </div>
+            <canvas id="Grade_Chart" basechart="" height="184" class="chart chartjs-render-monitor"
+              style="display: block; height: 92px; width: 139px;" width="278">
+            </canvas>
+          </div>
+          <div class="row mt-2">
+            <div class="col-lg-5">
+              <span><span _ngcontent-hne-c224="" style="padding-right: 3px; color: #4D9D44;">
+                  ●
+                </span>
+                Cow Milk
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+          <hr class="mt-2 mb-2">
+          <div class="row">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #1C4E80;">
+                  ●
+                </span>
+                BuffMilk
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+          <hr class="mt-2 mb-2">
+          <div class="row">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #EA6A47;">
+                  ●
+                </span>
+                Mix Milk
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!----><!----><!---->
+    <div class="col-lg-3 pr-0 ng-star-inserted">
+      <div class="card h-100 mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <span class="text-custom4 font-bold">
+                LtrFat
+              </span>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary rounded-pill">
+                <span class="btn-label">
+                  Total: 0
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-wrapper pt-1">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class="">
+                </div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class="">
+                </div>
+              </div>
+            </div>
+            <canvas id="Grade_Chart" basechart="" height="184" class="chart mt-2 chartjs-render-monitor"
+              style="display: block; height: 92px; width: 139px;" width="278"></canvas>
+          </div>
+          <div class="row pt-4">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #319795;">
+                  ●
+                </span>
+                Morning
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+          <hr class="mt-2 mb-2">
+          <div class="row mt-0">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #4fd1c5;">
+                  ●
+                </span>
+                Evening
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="col-lg-3 pr-0 ng-star-inserted">
+      <div class="card h-100 mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <span class="text-custom4 font-bold">
+                LtrSNF
+              </span>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary rounded-pill">
+                <span class="btn-label">
+                  Total: 0
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-wrapper pt-1">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class="">
+                </div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class="">
+                </div>
+              </div>
+            </div>
+            <canvas id="Grade_Chart" basechart="" height="184" class="chart mt-2 chartjs-render-monitor"
+              style="display: block; height: 92px; width: 139px;" width="278">
+            </canvas>
+          </div>
+          <div class="row pt-4">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #dd6b20;">
+                  ●
+                </span>
+                Morning
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+          <hr class="mt-2 mb-2">
+          <div class="row mt-0">
+            <div class="col-lg-5">
+              <span>
+                <span style="padding-right: 3px; color: #f6ad55;">
+                  ●
+                </span>
+                Evening
+              </span>
+            </div>
+            <div class="col text-right">
+              0
+            </div>
+            <div class="col text-right">
+              NaN%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+  </div>
+  <div class="row mb-3">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <img src="assets/img/milk-bottle.png" height="30" class="mr-2">
+          <span>Top 10 MPP</span>
+          <a data-toggle="tooltip" data-placement="top" title="Export Top 10 MPP" class="btn btn-light float-right"
+            aria-describedby="cdk-describedby-message-2" cdk-describedby-host="0" aria-disabled="false">
+            <i class="fa fa-download" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="card-body p-0">
+          <div class="col-12 w-100 table-container p-0">
+            <table class="table table-bordered table-striped">
+              <thead class="bg-primary">
+                <tr>
+                  <th class="col-lg-1">Sr No</th>
+                  <th class="cdk-column-center">BMC Name</th>
+                  <th class="cdk-column-MPP">MPP Name</th>
+                  <th class="col-lg-2">Qty(Ltr)</th>
+                </tr>
+              </thead>
+              <!-- Table content here -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <img src="assets/img/milk-bottle.png" height="30" class="mr-2">
+          <span>Top 10 Routes</span>
+          <a data-toggle="tooltip" data-placement="top" title="Export Top 10 Member" class="btn btn-light float-right"
+            aria-describedby="cdk-describedby-message-3" cdk-describedby-host="0" aria-disabled="false">
+            <i class="fa fa-download" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="card-body p-0">
+          <div class="col-12 w-100 table-container p-0">
+            <table class="table table-bordered table-striped">
+              <thead class="bg-primary">
+                <tr>
+                  <th class="col-lg-1">Sr No</th>
+                  <th class="cdk-column-center">BMC Name</th>
+                  <th class="cdk-column-Route">Route Name</th>
+                  <th class="col-lg-2">Qty(Ltr)</th>
+                </tr>
+              </thead>
+              <!-- Table content here -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card h-100 third__box">
+    <div class="card-header">
+      <img src="assets/img/compare__sign.svg" height="30" class="mr-2">
+      <span class="mb-3">Year Wise Comparison (Ltr)</span>
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand">
+            <div class="">
+            </div>
+          </div>
+          <div class="chartjs-size-monitor-shrink">
+            <div class="">
+            </div>
+          </div>
+        </div>
+        <canvas basechart="" height="246" class="chart chartjs-render-monitor"
+          style="display: block; height: 123px; width: 531px;" width="1062">
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3" id="calenderBlock">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <img src="assets/img/calander.jpg" height="30" class="mr-2">
+          <span>Day Wise Total Procurement</span>
+        </div>
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-lg-6 col-md-6">
+              <div class="btn-group float-left">
+                <button class="btn btn-primary"> Previous </button>
+                <button class="btn btn-outline-secondary"> Today </button>
+                <button class="btn btn-primary" disabled=""> Next
+                </button>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <h6 class="btn btn-primary float-right"> August 2023</h6>
+            </div>
+            <div id="calendar">
+              <!-- <input type="date" style="display: flex;  justify-content: left;"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <img src="assets/img/calander.jpg" height="30" class="mr-2">
+          <span>Month Wise Total Procurement</span>
+        </div>
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+              <h6 class="btn btn-primary float-right">2023</h6>
+            </div>
+          </div>
+          <br>
+          <div>
+            <table class="table table-bordered">
+              <tr class="ng-star-inserted">
+                <td class="pb-0 pt-0 border-less ng-star-inserted">
+              <tr class="row">
+                <td class="col-4 inner-td">
+                  <span class="font-weight-bold float-right text-primary">
+                    January
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    February
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span><!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    March
+                  </span>
+                  <br>
+                  <br><!----><span _ngcontent-hne-c224="" class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+              </tr>
+              </td>
+              <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <td class="pb-0 pt-0 border-less ng-star-inserted">
+              <tr class="row">
+                <td class="col-4 inner-td">
+                  <span class="font-weight-bold float-right text-primary">
+                    April
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    May
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    June
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+              </tr>
+              </td>
+              <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <td class="pb-0 pt-0 border-less ng-star-inserted">
+              <tr class="row">
+                <td class="col-4 inner-td">
+                  <span class="font-weight-bold float-right text-primary">
+                    July
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!----><br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    August
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    September
+                  </span>
+                  <br><br _ngcontent-hne-c224=""><!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+              </tr>
+              </td>
+              <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <td class="pb-0 pt-0 border-less ng-star-inserted">
+              <tr class="row">
+                <td class="col-4 inner-td">
+                  <span class="font-weight-bold float-right text-primary">
+                    October
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    November
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+                <td class="col-4 inner-td ng-star-inserted">
+                  <span class="font-weight-bold float-right text-primary">
+                    December
+                  </span>
+                  <br>
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg Fat:
+                  </span>
+                  <!---->
+                  <br>
+                  <!---->
+                  <span class="ng-star-inserted">
+                    Avg SNF :
+                  </span>
+                  <!---->
+                  <br>
+                  <span class="ng-star-inserted">
+                    Qty(Ltr): 0.000
+                  </span>
+                  <!----><!---->
+                </td>
+                <!---->
+              </tr>
+              </td>
+              <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <tr class="ng-star-inserted">
+                <!---->
+              </tr>
+              <!---->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="dialog-auto-name" class="modal-title pull-left">Dashboard Search</h5>
+          <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="searchForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                <label for="from_date" class="mt-2 required">FromDate</label>
+                <input type="text" class="form-control form-control-sm mt-2" id="from_date" formControlName="from_date"
+                  placeholder="DD/MM/YYYY" bsDatepicker [bsConfig]="datePickerConfig"
+                  [ngClass]="{'is-invalid' : searchForm.get('from_date')?.invalid && searchForm.get('from_date')?.touched}">
+                <div class="invalid-feedback">Please select from date.</div>
+              </div>
+              <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                <label for="from_shift" class="mt-2 wd-10 required">Select FromShift</label>
+                <select class="form-dropdown mt-2" formControlName="from_shift"
+                  [ngClass]="{'is-invalid' : searchForm.get('from_shift')?.invalid && searchForm.get('from_shift')?.touched}">
+                  <option value="" selected>Select Shift</option>
+                  <option Value="1">Morning</option>
+                  <option Value="2">Evening</option>
+                </select>
+                <div class="invalid-feedback">Please select from shift.</div>
+              </div>
+              <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                <label for="to_date" class="mt-2 required">ToDate</label>
+                <input type="text" class="form-control form-control-sm mt-2" id="to_date" formControlName="to_date"
+                  placeholder="DD/MM/YYYY" bsDatepicker [bsConfig]="datePickerConfig"
+                  [ngClass]="{'is-invalid' : searchForm.get('to_date')?.invalid && searchForm.get('to_date')?.touched}">
+                <div class="invalid-feedback">Please select to date.</div>
+              </div>
+              <div class="form-group col-sm-1 col-md-3 col-ld-3 col-xl-3">
+                <label for="to_shift" class="mt-2 wd-10 required">Select ToShift</label>
+                <select class="form-dropdown mt-2" formControlName="to_shift"
+                  [ngClass]="{'is-invalid' : searchForm.get('to_shift')?.invalid && searchForm.get('to_shift')?.touched}">
+                  <option value="" selected>Select Shift</option>
+                  <option Value="1">Morning</option>
+                  <option Value="2">Evening</option>
+                </select>
+                <div class="invalid-feedback">Please select to shift.</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn_form" [disabled]="!searchForm.valid"
+              (click)="DashboardUpdate()">Search</button>
+            <button type="button" class="btn btn_form" (click)="hideModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

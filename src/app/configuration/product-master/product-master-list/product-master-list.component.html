@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Product Master List
+            <a href="javascript:void()" [routerLink]="['/product/master']"><i class="fa fa-plus"
+                    style="float: right;margin: 3px;font-size: larger;"> </i></a>
+            <a href="javascript:void()" [routerLink]="['/product/master/list']"><i class="fa fa-search"
+                    style=" float: right;margin: 3px;font-size: larger;"> </i></a>
+            <i class="fa fa-upload" style=" float: right;margin: 3px;font-size: larger;" (click)="exportDataToExcel()" title="Download in Excel."></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="createForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search Product Master</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 500px; margin-top: 10px;" class="ag-theme-alpine"
+                [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30"
+                [headerHeight]="30" [components]="frameworkComponents">
+                <!-- [headerHeight]="30" [frameworkComponents]="frameworkComponents"> -->
+            </ag-grid-angular>
+        </div>
+    </div>
+    
+</div>

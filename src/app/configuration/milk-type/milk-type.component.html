@@ -1,0 +1,153 @@
+<div class="container-fluid">
+    <!-- <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue;">
+            Milk Type Master
+        </div>
+        <form [formGroup]="createForm" (ngSubmit)="Create()">
+            <div class="row">
+                <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <label for="milk_type_name"  class="mt-2">MilkType Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" formControlName="milk_type_name" id="milk_type_name"
+                    [ngClass]="{'is-invalid' : createForm.get('milk_type_name')?.errors && createForm.get('milk_type_name')?.touched}"
+                        placeholder="Milk Type Name">
+                        <div class="invalid-feedback">Please enter a milk type name.</div>
+                </div>
+                <div class="form-group col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <label for="milk_type_short_name"  class="mt-2">Milk Type Short Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm mt-2" id="milk_type_short_name" formControlName="milk_type_short_name"
+                    [ngClass]="{'is-invalid' : createForm.get('milk_type_short_name')?.errors && createForm.get('milk_type_short_name')?.touched}"
+                        placeholder="Short name">
+                        <div class="invalid-feedback">Please enter a milk type short name.</div>
+                </div>
+                <div class="form-check pl-3 mt-5 col-sm-1 col-md-2 col-ld-2 col-xl-2">
+                    <input class="form-check-input" formControlName="is_active" type="checkbox" value="true" id="is_active">
+                    <label class="form-check-label" for="is_active">
+                      Is Active
+                    </label>
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1 col-md-6 col-ld-4 col-xl-3">
+                    <button type="submit" class="btn btn_form mt-5" [disabled]="!createForm.valid">Submit</button>
+                    <button type="reset" class="btn btn_form mt-5 btn_margin_left_10px">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div> -->
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style=" background-color: lightblue; margin-top: 20px;">
+            Milk Type List
+        <a href="javascript:void()" ><i class="fa fa-plus" style="float: right;margin: 3px;font-size: larger;" (click)="addMilkType()" title="add the milk type here."> </i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="search">
+            <form [formGroup]="createForm">
+             <mat-form-field appearance="fill">
+                 <mat-label>Search Route</mat-label>
+                 <input class="searchBox" type="text" matInput  formControlName="search" (input)="onSearchInput($event)">
+                 <mat-icon matSuffix class="fa fa-search"></mat-icon>
+               </mat-form-field>
+           </form>
+       </div>
+        <div class="col-md-12">
+            <ag-grid-angular style="width: 100%; height: 380px; margin-top: 10px;" class="ag-theme-alpine" [rowData]="rowData"
+                [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowHeight]="30" [headerHeight]="30" [components]="frameworkComponents">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div *ngIf="isUpdateModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="dialog-auto-name" class="modal-title pull-left required">Update Milk Type</h5>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="searchForm" (ngSubmit)="Update()">
+                <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Milk Type Code</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="milk_type_code"
+                            placeholder="Milk Type Code">
+                        <div class="invalid-feedback">Please enter a Milk Type Code.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Milk Type Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="milk_type_name"
+                            placeholder="Milk Type Name">
+                        <div class="invalid-feedback">Please enter a Milk Type Name.</div>
+                      </div>
+                      <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="bmc_name" class="mt-2 required">Milk Type Short Name</label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="bmc_name" formControlName="milk_type_short_name" placeholder="milk type short Name">
+                        <div class="invalid-feedback">Please enter a Milk type short Name.</div>
+                      </div>
+                      </div>
+                    </div>
+                <div class="modal-footer">
+                  <div class="row">
+                      <div>
+                          <button type="submit" class="btn btn_form " >Update</button> <!--[disabled]="!searchForm.valid"-->
+                          <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div *ngIf="isAddModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 id="dialog-auto-name" class="modal-title pull-left required">Add Milk Type</h5>
+              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                  <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+          </div>
+          <form [formGroup]="createForm" (ngSubmit)="Create()">
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="milk_type_name"  class="mt-2">Milk Type Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-sm mt-2" formControlName="milk_type_name" id="milk_type_name"
+                        [ngClass]="{'is-invalid' : createForm.get('milk_type_name')?.errors && createForm.get('milk_type_name')?.touched}"
+                            placeholder="Milk Type Name">
+                            <div class="invalid-feedback">Please enter a milk type name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4">
+                        <label for="milk_type_short_name"  class="mt-2">Milk Type Short Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-sm mt-2" id="milk_type_short_name" formControlName="milk_type_short_name"
+                        [ngClass]="{'is-invalid' : createForm.get('milk_type_short_name')?.errors && createForm.get('milk_type_short_name')?.touched}"
+                            placeholder="Short name">
+                            <div class="invalid-feedback">Please enter a milk type short name.</div>
+                    </div>
+                    <div class="form-group col-sm-1 col-md-4 col-ld-4 col-xl-4 mt-5">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" value="true" id="is_active">
+                        <label class="form-check-label" for="is_active">
+                          Is Active
+                        </label>
+                    </div>
+                    </div>
+                  </div>
+              <div class="modal-footer">
+                <div class="row">
+                    <div>
+                        <button type="submit" class="btn btn_form " >Add</button> <!--[disabled]="!searchForm.valid"-->
+                        <button type="button" class="btn btn_form " (click)="hideModal()">Cancel</button>
+                    </div>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+</div>

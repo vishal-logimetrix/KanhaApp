@@ -1,0 +1,87 @@
+.header{
+    background-color: #003b9a;
+    height: 2.5em;
+    color: #fff;
+    font-weight: 500;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+.company_name {
+    font-size: large;
+}
+/* ul li a{
+    border-bottom: 1px solid white !important;
+} */
+.text img{
+    max-width: 10vw;
+    max-height: 10vh;
+}
+.text{
+  margin: 30px 0px 10px 0px;
+}
+.sidebar {
+    transition: width 0.4s;
+    /* z-index: 1; */
+  }
+  /* .content {
+    position: relative;
+    z-index: 0;
+  } */
+
+  #ul{
+    margin-top: 15px;
+  }
+  
+  .sidebar.collapsed {
+    width: 60px;
+  }
+  .sidebar {
+    transition: all 0.3s;
+  }
+  .sidebar.col-md-0 {
+    width: 0;
+    display: none;
+    overflow: hidden;
+  }
+  .sidebar .toggle-button {
+    margin: 5px;
+  }
+  @media (max-width: 767px) {
+    .sidebar {
+        width: 0;
+        display: none;
+    }
+    .sidebar.collapsed {
+        width: 60px;
+      }
+}
+.toggle-button {
+    display: block;
+    cursor: pointer;
+}
+/* ul li a span{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+} */
+/* .fa{
+  margin-right: 50% !important;
+} */
+/* #geoList{
+  margin-right: 15px;
+} */
+.selected {
+  background-color: #5c5b5b; /* Background color for the selected item */
+  color: white; /* Text color for the selected item */
+  border-radius: 5%;
+}
+nav ul li li a{
+  margin-left: 2px !important;
+}
+
+nav ul li li ul li a {
+  margin-left: 7px !important;
+}

@@ -1,0 +1,11 @@
+
+
+
+ul li a{
+    border-bottom: 1ps solid white !important;
+}
+
+.text img{
+    max-width: 10vw;
+    max-height: 10vh;
+}
